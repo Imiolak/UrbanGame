@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:UrbanGame.ViewModels;assembly=UrbanGame"
+             xmlns:converters="clr-namespace:UrbanGame.Converters;assembly=UrbanGame"
+             xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             x:Class="UrbanGame.Views.MainGamePage"
+             Title="MainGamePage">
+    <!--<ContentPage.BindingContext>
+        <viewModels:MainGameViewModel/>
+    </ContentPage.BindingContext>-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ScanCodeButtonTextConverter x:Key="ScanCodeButtonTextConverter"/>
+            <converters:ScanCodeButtonIsEnabledConverter x:Key="ScanCodeButtonIsEnabledConverter"/>
+            <converters:ObjectiveLabelBackgroundColorConverter x:Key="ObjectiveLabelBackgroundColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    Android="5"
+                    iOS="5,25,5,5"
+                    WinPhone="5"></OnPlatform>
+    </ContentPage.Padding>
+
+    <StackLayout>
+        <Frame VerticalOptions="Start" 
+            Padding="5">
+
+            <Grid VerticalOptions="Start"
+                  HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Wyniki"
+                       FontSize="Large"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       HorizontalOptions="Center"/>
+
+                <Label Text="Czas gry"
+                       FontSize="Medium"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       HorizontalOptions="Center"/>
+
+                <Label x:Name="GameTimeLabel"
+                       Text="{Binding GameElapsedTime}"
+                       FontSize="Medium"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       HorizontalOptions="Center"/>
+
+                <Label Text="Punkty"
+                       FontSize="Medium"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalOptions="Center"/>
+
+                <Label x:Name="PoinsLabel"
+                       Text="{Binding Points}"
+                       FontSize="Medium"
+                       Grid.Row="2"
+                       Grid.Column="1"
+                       HorizontalOptions="Center"/>
+            </Grid>
+        </Frame>
+
+        <Frame Padding="5" VerticalOptions="FillAndExpand">
+            <StackLayout>
+                <forms:CarouselView x:Name="SelectedObjectiveCarouselView"
+                                    ItemsSource="{Binding Objectives}"
+                                    ItemSelected="CarouselView_OnItemSelected"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="FillAndExpand">
+                    <forms:CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding ObjectiveNo, StringFormat='Cel {0}'}"
+                                       BackgroundColor="{Binding IsCompleted, Converter={StaticResource ObjectiveLabelBackgroundColorConverter}}"
+                                       IsEnabled="{Binding IsStarted}"
+                                       FontSize="Large"
+                                       HorizontalOptions="FillAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="FillAndExpand"
+                                       VerticalTextAlignment="Center"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </forms:CarouselView.ItemTemplate>
+                </forms:CarouselView>
+
+                <ScrollView x:Name="ObjectiveDetailsView">
+                    <StackLayout >
+                        <Label Text="Główna wskazówka:"
+                               FontSize="Medium">
+                        </Label>
+                        <Label Text="{Binding MainClue.Content}"/>
+                        <Label Text="Dodawkowe wskazówki"
+                               FontSize="Medium">
+                        </Label>
+                        <ListView ItemsSource="{Binding ExtraClues}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Label Text="{Binding Content}"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </Frame>
+
+        <Frame Padding="5" 
+               VerticalOptions="End">
+            <Grid HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Button Text="Zresetuj postęp"
+                        BackgroundColor="Red"
+                        Grid.Column="0"
+                        Clicked="ResetProgressButton_Clicked" />
+                <Button x:Name="ScanCodeButton"
+                        Text="{Binding GameEnded, Converter={StaticResource ScanCodeButtonTextConverter}}"
+                        IsEnabled="{Binding GameEnded, Converter={StaticResource ScanCodeButtonIsEnabledConverter}}"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="Green"
+                        Grid.Column="1"
+                        Clicked="ScanCodeButton_Clicked"/>
+            </Grid>
+        </Frame>
+    </StackLayout>
+    
+</ContentPage>
