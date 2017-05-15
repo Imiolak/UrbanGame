@@ -12,7 +12,7 @@ namespace UrbanGame.Game
                 CurrentObjective = int.Parse(App.Database.GetApplicationVariableByName(ApplicationVariables.CurrentObjective).Value),
                 PointsPerMainObjective =
                     int.Parse(App.Database.GetApplicationVariableByName(ApplicationVariables.PointsPerMainObjective).Value),
-                PointPerExtraObjective =
+                PointsPerExtraObjective =
                     int.Parse(App.Database.GetApplicationVariableByName(ApplicationVariables.PointsPerExtraObjective).Value),
                 Objectives = App.Database.GetAllObjectives()
             };

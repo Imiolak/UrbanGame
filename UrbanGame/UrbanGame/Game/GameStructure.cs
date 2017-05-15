@@ -11,7 +11,7 @@ namespace UrbanGame.Game
 
         public int PointsPerMainObjective { get; set; }
 
-        public int PointPerExtraObjective { get; set; }
+        public int PointsPerExtraObjective { get; set; }
 
         public IEnumerable<Objective> Objectives { get; set; }
     }

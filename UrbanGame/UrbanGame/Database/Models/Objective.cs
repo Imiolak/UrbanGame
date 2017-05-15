@@ -26,6 +26,6 @@ namespace UrbanGame.Database.Models
         public Clue MainClue => Clues.SingleOrDefault(c => c.Minor == 0);
 
         [Ignore]
-        public IEnumerable<Clue> ExtraClues => Clues.Where(c => c.Minor != 0);
+        public IEnumerable<Clue> ExtraClues => Clues.Where(c => c.Minor != 0).OrderBy(c => c.Minor);
     }
 }

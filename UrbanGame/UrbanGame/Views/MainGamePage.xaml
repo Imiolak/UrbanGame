@@ -6,9 +6,9 @@
              xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
              x:Class="UrbanGame.Views.MainGamePage"
              Title="MainGamePage">
-    <!--<ContentPage.BindingContext>
+    <ContentPage.BindingContext>
         <viewModels:MainGameViewModel/>
-    </ContentPage.BindingContext>-->
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ScanCodeButtonTextConverter x:Key="ScanCodeButtonTextConverter"/>
@@ -39,7 +39,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Text="Wyniki"
+                <Label Text="Wynik"
                        FontSize="Large"
                        Grid.Row="0"
                        Grid.Column="0"
@@ -97,24 +97,23 @@
                     </forms:CarouselView.ItemTemplate>
                 </forms:CarouselView>
 
-                <ScrollView x:Name="ObjectiveDetailsView">
-                    <StackLayout >
+                <ScrollView>
+                    <StackLayout>
                         <Label Text="Główna wskazówka:"
                                FontSize="Medium">
                         </Label>
                         <Label Text="{Binding MainClue.Content}"/>
-                        <Label Text="Dodawkowe wskazówki"
+                        <Label Text="Dodatkowe wskazówki:"
                                FontSize="Medium">
                         </Label>
-                        <ListView ItemsSource="{Binding ExtraClues}">
+                        <!--ListView ItemsSource="{Binding ExtraClues}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout>
-                                        <Label Text="{Binding Content}"/>
-                                    </StackLayout>
+                                    <TextCell Text="{Binding Content}"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                        </ListView>
+                        </ListView>-->
+                        <StackLayout x:Name="ExtraCluesView" />
                     </StackLayout>
                 </ScrollView>
             </StackLayout>
@@ -145,5 +144,4 @@
             </Grid>
         </Frame>
     </StackLayout>
-    
 </ContentPage>

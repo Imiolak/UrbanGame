@@ -33,10 +33,21 @@ namespace UrbanGame.ViewModels
             Points = CountPoints();
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                var gameElapsedTime = DateTime.UtcNow - _gameStartTimestamp;
+                TimeSpan gameElapsedTime;
+
+                if (!GameEnded)
+                {
+                    gameElapsedTime = DateTime.UtcNow - _gameStartTimestamp;
+                    
+                }
+                else
+                {
+                    gameElapsedTime = GameEndedTimeStamp - _gameStartTimestamp;
+                }
+
                 GameElapsedTime = gameElapsedTime.Hours >= 1
-                    ? $"{gameElapsedTime.Hours}:{gameElapsedTime.Minutes}:{gameElapsedTime.Seconds}"
-                    : $"{gameElapsedTime.Minutes}:{gameElapsedTime.Seconds}";
+                        ? $"{gameElapsedTime.Hours}:{gameElapsedTime.Minutes}:{gameElapsedTime.Seconds:00}"
+                        : $"{gameElapsedTime.Minutes}:{gameElapsedTime.Seconds:00}";
 
                 return !GameEnded;
             });
@@ -53,31 +64,44 @@ namespace UrbanGame.ViewModels
             {
                 if (IsGameEndingClue(clue))
                 {
+                    GameEndedTimeStamp = DateTime.UtcNow;
                     GameEnded = true;
-                    Points = CountPoints();
+                }
+                else
+                {
+                    var currentObjective = App.Database.GetObjectiveForClue(clue.Major);
+                    currentObjective.IsStarted = true;
+                    currentObjective.NumberOfExtraObjectives = numberOfExtraObjectives;
+                    currentObjective.Clues.Add(clue);
 
-                    return;
+                    App.Database.AddClue(clue);
+                    App.Database.UpdateObjective(currentObjective);
+
+                    CurrentObjective = clue.Major;
                 }
 
-                App.Database.AddClue(clue);
+                var previousObjective = App.Database.GetObjectiveForClue(clue.Major - 1);
+                previousObjective.IsCompleted = true;
 
-                Objectives = new ObservableCollection<Objective>(App.Database.GetAllObjectives());
-                CurrentObjective = clue.Major;
-                Points = CountPoints();
+                App.Database.UpdateObjective(previousObjective);
             }
             else
             {
-                App.Database.AddClue(clue);
+                var objective = App.Database.GetObjectiveForClue(clue.Major);
+                objective.Clues.Add(clue);
 
-                Objectives = new ObservableCollection<Objective>(App.Database.GetAllObjectives());
-                Points = CountPoints();
+                App.Database.AddClue(clue);
+                App.Database.UpdateObjective(objective);
             }
+
+            Objectives = new ObservableCollection<Objective>(App.Database.GetAllObjectives());
+            Points = CountPoints();
         }
 
         private int CountPoints()
         {
             return Objectives.Count(o => o.IsCompleted) * _pointsPerMainObjective
-                   + Objectives.Where(o => o.IsCompleted).Sum(o => o.Clues.Count - 1) * _pointsPerExtraObjective;
+                   + Objectives.Sum(o => o.ExtraClues.Count()) * _pointsPerExtraObjective;
         }
 
         #region Conditional helpers
@@ -124,6 +148,21 @@ namespace UrbanGame.ViewModels
             }
         }
 
+        public DateTime GameEndedTimeStamp
+        {
+            get
+            {
+                return
+                    DateTime.Parse(
+                        App.Database.GetApplicationVariableByName(ApplicationVariables.GameEndedTimestamp).Value);
+            }
+            set
+            {
+                App.Database.SetApplicationVariable(ApplicationVariables.GameEndedTimestamp, value.ToString());
+                OnPropertyChanged();
+            }
+        }
+
         private int _points;
         public int Points
         {
@@ -152,6 +191,24 @@ namespace UrbanGame.ViewModels
             set
             {
                 _objectives = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Clue _mainClue;
+        public Clue MainClue { get { return _mainClue; }
+            set
+            {
+                _mainClue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Clue> _extraClues;
+        public ObservableCollection<Clue> ExtraClues { get { return _extraClues; }
+            set
+            {
+                _extraClues = value;
                 OnPropertyChanged();
             }
         }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SQLite.Net;
+using System;
+using System.Collections.ObjectModel;
 using UrbanGame.Database.Models;
 using UrbanGame.Exceptions;
 using UrbanGame.Game;
@@ -7,20 +9,16 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing;
 using ZXing.Net.Mobile.Forms;
+using Result = SQLite.Net.Interop.Result;
 
 namespace UrbanGame.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
-        private readonly MainGameViewModel _viewModel;
-
-        public MainGamePage(MainGameViewModel viewModel = null)
+        public MainGamePage()
         {
             InitializeComponent();
-
-            _viewModel = viewModel ?? new MainGameViewModel();
-            BindingContext = _viewModel;
         }
         
         private void ResetProgressButton_Clicked(object sender, EventArgs e)
@@ -38,7 +36,7 @@ namespace UrbanGame.Views
             var qrScanPage = new ZXingScannerPage(scanOptions)
             {
                 DefaultOverlayTopText = "Zeskanuj kod",
-                DefaultOverlayBottomText = "sdrgdsb"
+                DefaultOverlayBottomText = "Pls"
             };
 
             qrScanPage.OnScanResult += (result) =>
@@ -54,17 +52,40 @@ namespace UrbanGame.Views
                         int numberOfExtraObjectives;
                         var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives);
 
-                        _viewModel.AddClue(clue, numberOfExtraObjectives);
+                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives);
+                    }
+                    catch (InvalidClueCodeException)
+                    {
+                        DisplayAlert("Niepoprawny kod",
+                            "Format kodu jest niepoprawny. Skontaktuj się z organizatorem gry i poinformuj go o tym!",
+                            "OK");
                     }
                     catch (ClueNotInCurrentGameScopeException)
                     {
                         DisplayAlert("Nieobsługiwany kod",
-                               "Kod, który zeskanowałeś może być użyty jedynie w późniejszej fazie gry. Znajdź poprzednie kody i wróć aby odblokować ten!",
-                               "OK");
+                            "Kod, który zeskanowałeś może być użyty jedynie w późniejszej fazie gry. Znajdź poprzednie kody i wróć aby odblokować ten!",
+                            "OK");
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        if (ex.Result == Result.Constraint)
+                        {
+                            DisplayAlert("Powtórzony kod",
+                                "Zeskanowałeś już wcześniej ten kod!",
+                                "OK");
+                        }
+                        else
+                        {
+                            DisplayAlert("Błąd bazy",
+                                $"Coś poszło nie tak przy zapisywaniu kodu do bazy: {ex}",
+                                "OK");
+                        }
+
+                        
                     }
                     catch (Exception ex)
                     {
-                        DisplayAlert("Niepoprawny kod", ex.ToString(), "Zrozumiałem");
+                        DisplayAlert("Niepoprawny kod", ex.ToString(), "OK");
                     }
                 });
             };
@@ -74,7 +95,20 @@ namespace UrbanGame.Views
 
         private void CarouselView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            ObjectiveDetailsView.BindingContext = ((CarouselView) sender).Item as Objective;
+            var objective = ((CarouselView) sender).Item as Objective;
+
+            ((MainGameViewModel)BindingContext).MainClue = objective.MainClue;
+            ((MainGameViewModel)BindingContext).ExtraClues = new ObservableCollection<Clue>(objective.ExtraClues);
+
+            //remove when biding repaired
+            ExtraCluesView.Children.Clear();
+            foreach (var extraClue in ((MainGameViewModel)BindingContext).ExtraClues)
+            {
+                ExtraCluesView.Children.Add(new Label
+                {
+                    Text = $"{extraClue.Minor}. {extraClue.Content}"
+                });    
+            }
         }
     }
 }

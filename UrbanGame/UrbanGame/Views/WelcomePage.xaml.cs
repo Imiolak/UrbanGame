@@ -1,5 +1,6 @@
 ﻿using System;
 using UrbanGame.Database.Models;
+using UrbanGame.Exceptions;
 using UrbanGame.Game;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -50,9 +51,9 @@ namespace UrbanGame.Views
 
                         var startingGameStructire = new ClueReader().ReadStartingCode(result.Text);
 
-                        App.Database.SetApplicationVariable(ApplicationVariables.GameStarted, 
+                        App.Database.SetApplicationVariable(ApplicationVariables.GameStarted,
                             true.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.GameEnded, 
+                        App.Database.SetApplicationVariable(ApplicationVariables.GameEnded,
                             false.ToString());
                         App.Database.SetApplicationVariable(ApplicationVariables.GameStartedTimestamp,
                             DateTime.UtcNow.ToString());
@@ -63,7 +64,7 @@ namespace UrbanGame.Views
                         App.Database.SetApplicationVariable(ApplicationVariables.PointsPerMainObjective,
                             startingGameStructire.PointsPerMainObjective.ToString());
                         App.Database.SetApplicationVariable(ApplicationVariables.PointsPerExtraObjective,
-                            startingGameStructire.PointPerExtraObjective.ToString());
+                            startingGameStructire.PointsPerExtraObjective.ToString());
 
                         foreach (var objective in startingGameStructire.Objectives)
                         {
@@ -71,6 +72,12 @@ namespace UrbanGame.Views
                         }
 
                         App.Instance.SetNewMainPage(new MainGamePage());
+                    }
+                    catch (InvalidClueCodeException)
+                    {
+                        DisplayAlert("Niepoprawny kod",
+                            "Format kodu jest niepoprawny. Skontaktuj się z organizatorem gry i poinformuj go o tym!",
+                            "OK");
                     }
                     catch (Exception ex)
                     {

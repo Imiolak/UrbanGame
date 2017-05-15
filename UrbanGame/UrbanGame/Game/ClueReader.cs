@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UrbanGame.Database.Models;
 using UrbanGame.Exceptions;
@@ -16,50 +17,57 @@ namespace UrbanGame.Game
             var regex = new Regex(StartingCodePattern);
             var match = regex.Match(clueCode);
 
-            var numberOfObjectives = int.Parse(match.Groups[1].Value);
-
-            var objectives = new List<Objective>
+            try
             {
-                new Objective
+                var numberOfObjectives = int.Parse(match.Groups[1].Value);
+
+                var objectives = new List<Objective>
                 {
-                    ObjectiveNo = 1,
-                    IsStarted = true,
-                    IsCompleted = false,
-                    NumberOfExtraObjectives = int.Parse(match.Groups[4].Value),
-                    Clues = new List<Clue>
+                    new Objective
                     {
-                        new Clue
+                        ObjectiveNo = 1,
+                        IsStarted = true,
+                        IsCompleted = false,
+                        NumberOfExtraObjectives = int.Parse(match.Groups[4].Value),
+                        Clues = new List<Clue>
                         {
-                            Major = 1,
-                            Minor = 0,
-                            Content = match.Groups[5].Value.Trim()
+                            new Clue
+                            {
+                                Major = 1,
+                                Minor = 0,
+                                Content = match.Groups[5].Value.Trim()
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            for (var i = 2; i <= numberOfObjectives; i++)
-            {
-                objectives.Add(new Objective
+                for (var i = 2; i <= numberOfObjectives; i++)
                 {
-                    ObjectiveNo = i,
-                    IsStarted = false,
-                    IsCompleted = false,
-                    NumberOfExtraObjectives = 0,
-                    Clues = new List<Clue>()
-                });
-            }
+                    objectives.Add(new Objective
+                    {
+                        ObjectiveNo = i,
+                        IsStarted = false,
+                        IsCompleted = false,
+                        NumberOfExtraObjectives = 0,
+                        Clues = new List<Clue>()
+                    });
+                }
 
-            var gameStructure = new GameStructure
+                var gameStructure = new GameStructure
+                {
+                    NumberOfObjectives = numberOfObjectives,
+                    CurrentObjective = 1,
+                    PointsPerMainObjective = int.Parse(match.Groups[2].Value),
+                    PointsPerExtraObjective = int.Parse(match.Groups[3].Value),
+                    Objectives = objectives
+                };
+
+                return gameStructure;
+            }
+            catch (Exception e)
             {
-                NumberOfObjectives = numberOfObjectives,
-                CurrentObjective = 1,
-                PointsPerMainObjective = int.Parse(match.Groups[2].Value),
-                PointPerExtraObjective = int.Parse(match.Groups[3].Value),
-                Objectives = objectives
-            };
-            
-            return gameStructure;
+                throw new InvalidClueCodeException(e);
+            }
         }
 
         public Clue ReadClue(string clueCode, out int numberOfExtraObjectives)

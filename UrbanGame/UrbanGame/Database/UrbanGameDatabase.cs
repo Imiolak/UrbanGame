@@ -20,9 +20,16 @@ namespace UrbanGame.Database
             CreateTables();
         }
 
+        #region Objectives
         public List<Objective> GetAllObjectives()
         {
             return _database.GetAllWithChildren<Objective>(recursive: true);
+        }
+
+        public Objective GetObjectiveForClue(int clueMajor)
+        {
+            return _database.GetAllWithChildren<Objective>(o => o.ObjectiveNo == clueMajor, recursive: true)
+                .Single();
         }
 
         public void AddObjective(Objective objective)
@@ -41,17 +48,16 @@ namespace UrbanGame.Database
         {
             _database.UpdateWithChildren(objective);
         }
+        #endregion
 
+        #region Clues
         public void AddClue(Clue clue)
         {
-            var objective = _database.GetAllWithChildren<Objective>(o => o.ObjectiveNo == clue.Major, recursive: true)
-                .Single();
-
-            objective.Clues.Add(clue);
             _database.Insert(clue);
-            UpdateObjective(objective);
         }
+        #endregion
 
+        #region Appliation Varibles
         public ApplicationVariable GetApplicationVariableByName(ApplicationVariables name)
         {
             var variableNameString = name.ToString();
@@ -74,7 +80,9 @@ namespace UrbanGame.Database
                 _database.Insert(new ApplicationVariable { Name = name.ToString(), Value = value });
             }
         }
+        #endregion
 
+        #region DB Helpers
         private void CreateTables()
         {
             _database.CreateTable<ApplicationVariable>();
@@ -88,5 +96,6 @@ namespace UrbanGame.Database
             _database.DeleteAll<Clue>();
             _database.DeleteAll<Objective>();
         }
+        #endregion
     }
 }
