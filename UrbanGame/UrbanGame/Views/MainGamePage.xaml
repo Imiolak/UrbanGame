@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UrbanGame;assembly=UrbanGame"
              xmlns:viewModels="clr-namespace:UrbanGame.ViewModels;assembly=UrbanGame"
              xmlns:converters="clr-namespace:UrbanGame.Converters;assembly=UrbanGame"
              xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
@@ -28,7 +29,7 @@
             Padding="5">
 
             <Grid VerticalOptions="Start"
-                  HorizontalOptions="FillAndExpand">
+                  HorizontalOptions="Fill">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -74,54 +75,65 @@
             </Grid>
         </Frame>
 
-        <Frame Padding="5" VerticalOptions="FillAndExpand">
-            <StackLayout>
-                <forms:CarouselView x:Name="SelectedObjectiveCarouselView"
+        <Frame Padding="0">
+            <forms:CarouselView x:Name="SelectedObjectiveCarouselView"
                                     ItemsSource="{Binding Objectives}"
                                     ItemSelected="CarouselView_OnItemSelected"
-                                    VerticalOptions="Start"
-                                    HorizontalOptions="FillAndExpand">
-                    <forms:CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding ObjectiveNo, StringFormat='Cel {0}'}"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="FillAndExpand"
+                                    Margin="10,10,10,0">
+                <forms:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="FillAndExpand">
+                            <Label Text="{Binding ObjectiveNo, StringFormat='Cel {0}'}"
                                        BackgroundColor="{Binding IsCompleted, Converter={StaticResource ObjectiveLabelBackgroundColorConverter}}"
                                        IsEnabled="{Binding IsStarted}"
                                        FontSize="Large"
-                                       HorizontalOptions="FillAndExpand"
+                                       HorizontalOptions="Fill"
                                        HorizontalTextAlignment="Center"
-                                       VerticalOptions="FillAndExpand"
                                        VerticalTextAlignment="Center"/>
-                            </StackLayout>
-                        </DataTemplate>
-                    </forms:CarouselView.ItemTemplate>
-                </forms:CarouselView>
+                        </StackLayout>
+                    </DataTemplate>
+                </forms:CarouselView.ItemTemplate>
+            </forms:CarouselView>
+        </Frame>
 
-                <ScrollView>
-                    <StackLayout>
-                        <Label Text="Główna wskazówka:"
+        <Frame VerticalOptions="FillAndExpand">
+            <ScrollView>
+                <StackLayout>
+                    <Frame Padding="0">
+                        <local:AspectRatioContainer AspectRatio="0.5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Margin="0">
+                            <Image Source="{Binding ImageSource}"
+                               Aspect="AspectFill"/>
+                        </local:AspectRatioContainer>
+                    </Frame>
+                    
+
+                    <Label Text="Główna wskazówka:"
                                FontSize="Medium">
-                        </Label>
-                        <Label Text="{Binding MainClue.Content}"/>
-                        <Label Text="Dodatkowe wskazówki:"
+                    </Label>
+                    <Label Text="{Binding MainClue.Content}"/>
+                    <Label Text="Dodatkowe wskazówki:"
                                FontSize="Medium">
-                        </Label>
-                        <!--ListView ItemsSource="{Binding ExtraClues}">
+                    </Label>
+                    <!--ListView ItemsSource="{Binding ExtraClues}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextCell Text="{Binding Content}"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>-->
-                        <StackLayout x:Name="ExtraCluesView" />
-                    </StackLayout>
-                </ScrollView>
-            </StackLayout>
+                    <StackLayout x:Name="ExtraCluesView" />
+                </StackLayout>
+            </ScrollView>
         </Frame>
 
         <Frame Padding="5" 
                VerticalOptions="End">
-            <Grid HorizontalOptions="FillAndExpand">
+            <Grid HorizontalOptions="Fill">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>

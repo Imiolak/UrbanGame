@@ -1,7 +1,9 @@
 ﻿using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace UrbanGame.Database.Models
 {
@@ -19,6 +21,8 @@ namespace UrbanGame.Database.Models
         
         public int NumberOfExtraObjectives { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Clue> Clues { get; set; }
 
@@ -27,5 +31,10 @@ namespace UrbanGame.Database.Models
 
         [Ignore]
         public IEnumerable<Clue> ExtraClues => Clues.Where(c => c.Minor != 0).OrderBy(c => c.Minor);
+
+        [Ignore]
+        public ImageSource ImageSource => IsCompleted
+            ? ImageSource.FromUri(new Uri(ImageUrl))
+            : ImageSource.FromResource("UrbanGame.Resources.emptyImage.png");
     }
 }

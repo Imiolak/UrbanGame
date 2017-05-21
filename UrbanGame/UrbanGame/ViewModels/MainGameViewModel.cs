@@ -53,7 +53,7 @@ namespace UrbanGame.ViewModels
             });
         }
 
-        public void AddClue(Clue clue, int numberOfExtraObjectives)
+        public void AddClue(Clue clue, int numberOfExtraObjectives, string imageUrl)
         {
             if (!ClueInCurrentGameScopeOrStageEnding(clue))
             {
@@ -82,6 +82,7 @@ namespace UrbanGame.ViewModels
 
                 var previousObjective = App.Database.GetObjectiveForClue(clue.Major - 1);
                 previousObjective.IsCompleted = true;
+                previousObjective.ImageUrl = imageUrl;
 
                 App.Database.UpdateObjective(previousObjective);
             }
@@ -196,7 +197,9 @@ namespace UrbanGame.ViewModels
         }
 
         private Clue _mainClue;
-        public Clue MainClue { get { return _mainClue; }
+        public Clue MainClue
+        {
+            get { return _mainClue; }
             set
             {
                 _mainClue = value;
@@ -205,10 +208,23 @@ namespace UrbanGame.ViewModels
         }
 
         private ObservableCollection<Clue> _extraClues;
-        public ObservableCollection<Clue> ExtraClues { get { return _extraClues; }
+        public ObservableCollection<Clue> ExtraClues
+        {
+            get { return _extraClues; }
             set
             {
                 _extraClues = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ImageSource _imageSource;
+        public ImageSource ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
                 OnPropertyChanged();
             }
         }
