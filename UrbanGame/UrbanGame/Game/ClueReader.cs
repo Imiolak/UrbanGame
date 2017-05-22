@@ -9,7 +9,7 @@ namespace UrbanGame.Game
     public class ClueReader
     {
         private const string StartingCodePattern = @"\[(\d+)\]\[(\d+)\]\[(\d+)\]\[(\d+)\](.*)";
-        private const string MainObjectiveCodePattern = @"\[(\d+)\]\[0\]\[(\d+)\]\[(.*)\](.*)";
+        private const string MainObjectiveCodePattern = @"\[(\d+)\]\[0\]\[(\d+)\]\[(.*)\]\[(.*)\](.*)";
         private const string ExtraObjectiveCodePatetrn = @"\[(\d+)\]\[(\d+)\](.*)";
 
         public GameStructure ReadStartingCode(string clueCode)
@@ -70,9 +70,10 @@ namespace UrbanGame.Game
             }
         }
 
-        public Clue ReadClue(string clueCode, out int numberOfExtraObjectives, out string imageUrl)
+        public Clue ReadClue(string clueCode, out int numberOfExtraObjectives, out string objectiveName, out string imageUrl)
         {
             numberOfExtraObjectives = 0;
+            objectiveName = "";
             imageUrl = "";
             var match = Regex.Match(clueCode, MainObjectiveCodePattern);
 
@@ -80,13 +81,14 @@ namespace UrbanGame.Game
             {
                 var objectiveNo = int.Parse(match.Groups[1].Value);
                 numberOfExtraObjectives = int.Parse(match.Groups[2].Value);
-                imageUrl = match.Groups[3].Value.Trim();
+                objectiveName = match.Groups[3].Value.Trim();
+                imageUrl = match.Groups[4].Value.Trim();
 
                 return new Clue
                 {
                     Major = objectiveNo,
                     Minor = 0,
-                    Content = match.Groups[4].Value.Trim()
+                    Content = match.Groups[5].Value.Trim()
                 };
             }
 

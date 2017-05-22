@@ -55,10 +55,11 @@ namespace UrbanGame.Views
                         Navigation.PopModalAsync();
 
                         int numberOfExtraObjectives;
+                        string objectiveName;
                         string imageUrl;
-                        var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives, out imageUrl);
+                        var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives, out objectiveName, out imageUrl);
 
-                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives, imageUrl);
+                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives, objectiveName, imageUrl);
                     }
                     catch (InvalidClueCodeException)
                     {

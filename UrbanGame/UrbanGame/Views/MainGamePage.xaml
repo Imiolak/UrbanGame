@@ -77,22 +77,22 @@
 
         <Frame Padding="0">
             <forms:CarouselView x:Name="SelectedObjectiveCarouselView"
-                                    ItemsSource="{Binding Objectives}"
-                                    ItemSelected="CarouselView_OnItemSelected"
-                                    HorizontalOptions="Fill"
-                                    VerticalOptions="FillAndExpand"
-                                    Margin="10,10,10,0">
+                                ItemsSource="{Binding Objectives}"
+                                ItemSelected="CarouselView_OnItemSelected"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="FillAndExpand"
+                                Margin="10,10,10,0">
                 <forms:CarouselView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout HorizontalOptions="FillAndExpand"
-                                             VerticalOptions="FillAndExpand">
-                            <Label Text="{Binding ObjectiveNo, StringFormat='Cel {0}'}"
-                                       BackgroundColor="{Binding IsCompleted, Converter={StaticResource ObjectiveLabelBackgroundColorConverter}}"
-                                       IsEnabled="{Binding IsStarted}"
-                                       FontSize="Large"
-                                       HorizontalOptions="Fill"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalTextAlignment="Center"/>
+                                     VerticalOptions="FillAndExpand">
+                            <Label Text="{Binding ObjectiveLabel}"
+                                    BackgroundColor="{Binding IsCompleted, Converter={StaticResource ObjectiveLabelBackgroundColorConverter}}"
+                                    IsEnabled="{Binding IsStarted}"
+                                    FontSize="Large"
+                                    HorizontalOptions="Fill"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalTextAlignment="Center"/>
                         </StackLayout>
                     </DataTemplate>
                 </forms:CarouselView.ItemTemplate>
@@ -107,17 +107,17 @@
                                                     HorizontalOptions="FillAndExpand"
                                                     Margin="0">
                             <Image Source="{Binding ImageSource}"
-                               Aspect="AspectFill"/>
+                                   Aspect="AspectFill"/>
                         </local:AspectRatioContainer>
                     </Frame>
                     
 
                     <Label Text="Główna wskazówka:"
-                               FontSize="Medium">
+                           FontSize="Medium">
                     </Label>
                     <Label Text="{Binding MainClue.Content}"/>
                     <Label Text="Dodatkowe wskazówki:"
-                               FontSize="Medium">
+                           FontSize="Medium">
                     </Label>
                     <!--ListView ItemsSource="{Binding ExtraClues}">
                             <ListView.ItemTemplate>

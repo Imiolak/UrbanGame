@@ -53,7 +53,7 @@ namespace UrbanGame.ViewModels
             });
         }
 
-        public void AddClue(Clue clue, int numberOfExtraObjectives, string imageUrl)
+        public void AddClue(Clue clue, int numberOfExtraObjectives, string objectiveName, string imageUrl)
         {
             if (!ClueInCurrentGameScopeOrStageEnding(clue))
             {
@@ -82,6 +82,7 @@ namespace UrbanGame.ViewModels
 
                 var previousObjective = App.Database.GetObjectiveForClue(clue.Major - 1);
                 previousObjective.IsCompleted = true;
+                previousObjective.ObjectiveName = objectiveName;
                 previousObjective.ImageUrl = imageUrl;
 
                 App.Database.UpdateObjective(previousObjective);
