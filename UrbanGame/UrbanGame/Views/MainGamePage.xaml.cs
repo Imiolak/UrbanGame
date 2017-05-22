@@ -50,9 +50,11 @@ namespace UrbanGame.Views
                         Navigation.PopModalAsync();
 
                         int numberOfExtraObjectives;
-                        var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives);
+                        string objectiveName, imageUrl, detailsPageUrl;
+                        
+                        var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives, out objectiveName, out imageUrl, out detailsPageUrl);
 
-                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives);
+                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives, objectiveName, imageUrl, detailsPageUrl);
                     }
                     catch (InvalidClueCodeException)
                     {
@@ -99,7 +101,10 @@ namespace UrbanGame.Views
 
             ((MainGameViewModel)BindingContext).MainClue = objective.MainClue;
             ((MainGameViewModel)BindingContext).ExtraClues = new ObservableCollection<Clue>(objective.ExtraClues);
-
+            ((MainGameViewModel)BindingContext).ImageSource = objective.ImageSource;
+            ((MainGameViewModel)BindingContext).DetailsPageUrl = objective.DetailsPageUrl;
+            ((MainGameViewModel)BindingContext).ObjectiveCompleted = objective.IsCompleted;
+            
             //remove when biding repaired
             ExtraCluesView.Children.Clear();
             foreach (var extraClue in ((MainGameViewModel)BindingContext).ExtraClues)

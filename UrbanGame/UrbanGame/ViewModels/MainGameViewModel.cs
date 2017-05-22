@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using UrbanGame.Annotations;
 using UrbanGame.Database.Models;
 using UrbanGame.Exceptions;
@@ -53,7 +54,7 @@ namespace UrbanGame.ViewModels
             });
         }
 
-        public void AddClue(Clue clue, int numberOfExtraObjectives)
+        public void AddClue(Clue clue, int numberOfExtraObjectives, string objectiveName, string imageUrl, string detailsPageUrl)
         {
             if (!ClueInCurrentGameScopeOrStageEnding(clue))
             {
@@ -82,6 +83,9 @@ namespace UrbanGame.ViewModels
 
                 var previousObjective = App.Database.GetObjectiveForClue(clue.Major - 1);
                 previousObjective.IsCompleted = true;
+                previousObjective.ObjectiveName = objectiveName;
+                previousObjective.ImageUrl = imageUrl;
+                previousObjective.DetailsPageUrl = detailsPageUrl;
 
                 App.Database.UpdateObjective(previousObjective);
             }
@@ -196,7 +200,9 @@ namespace UrbanGame.ViewModels
         }
 
         private Clue _mainClue;
-        public Clue MainClue { get { return _mainClue; }
+        public Clue MainClue
+        {
+            get { return _mainClue; }
             set
             {
                 _mainClue = value;
@@ -205,13 +211,53 @@ namespace UrbanGame.ViewModels
         }
 
         private ObservableCollection<Clue> _extraClues;
-        public ObservableCollection<Clue> ExtraClues { get { return _extraClues; }
+        public ObservableCollection<Clue> ExtraClues
+        {
+            get { return _extraClues; }
             set
             {
                 _extraClues = value;
                 OnPropertyChanged();
             }
         }
+
+        private ImageSource _imageSource;
+        public ImageSource ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _detailsPageUrl;
+        public string DetailsPageUrl
+        {
+            get { return _detailsPageUrl; }
+            set
+            {
+                _detailsPageUrl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _objectiveCompleted;
+        public bool ObjectiveCompleted
+        {
+            get { return _objectiveCompleted; }
+            set
+            {
+                _objectiveCompleted = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand OpenObjectiveDetailsCommmand => new Command(() =>
+        {
+            Device.OpenUri(new Uri(DetailsPageUrl));
+        });
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

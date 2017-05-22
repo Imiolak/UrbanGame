@@ -26,6 +26,8 @@ namespace UrbanGame.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::PCLStorage.Resource.String.ApplicationName = global::UrbanGame.Droid.Resource.String.ApplicationName;
+			global::PCLStorage.Resource.String.Hello = global::UrbanGame.Droid.Resource.String.Hello;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::UrbanGame.Droid.Resource.String.ApplicationName;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::UrbanGame.Droid.Resource.String.Hello;
 			global::SQLite.Net.Platform.XamarinAndroidN.Resource.String.ApplicationName = global::UrbanGame.Droid.Resource.String.ApplicationName;
