@@ -1,7 +1,6 @@
 ﻿using SQLite.Net;
 using System;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using UrbanGame.Database.Models;
 using UrbanGame.Exceptions;
 using UrbanGame.Game;
@@ -20,10 +19,6 @@ namespace UrbanGame.Views
         public MainGamePage()
         {
             InitializeComponent();
-
-            var assembly = typeof(EmbeddedImages).GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-                System.Diagnostics.Debug.WriteLine("found resource: " + res);
         }
         
         private void ResetProgressButton_Clicked(object sender, EventArgs e)
@@ -55,11 +50,11 @@ namespace UrbanGame.Views
                         Navigation.PopModalAsync();
 
                         int numberOfExtraObjectives;
-                        string objectiveName;
-                        string imageUrl;
-                        var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives, out objectiveName, out imageUrl);
+                        string objectiveName, imageUrl, detailsPageUrl;
+                        
+                        var clue = new ClueReader().ReadClue(result.Text, out numberOfExtraObjectives, out objectiveName, out imageUrl, out detailsPageUrl);
 
-                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives, objectiveName, imageUrl);
+                        ((MainGameViewModel) BindingContext).AddClue(clue, numberOfExtraObjectives, objectiveName, imageUrl, detailsPageUrl);
                     }
                     catch (InvalidClueCodeException)
                     {
@@ -107,7 +102,9 @@ namespace UrbanGame.Views
             ((MainGameViewModel)BindingContext).MainClue = objective.MainClue;
             ((MainGameViewModel)BindingContext).ExtraClues = new ObservableCollection<Clue>(objective.ExtraClues);
             ((MainGameViewModel)BindingContext).ImageSource = objective.ImageSource;
-
+            ((MainGameViewModel)BindingContext).DetailsPageUrl = objective.DetailsPageUrl;
+            ((MainGameViewModel)BindingContext).ObjectiveCompleted = objective.IsCompleted;
+            
             //remove when biding repaired
             ExtraCluesView.Children.Clear();
             foreach (var extraClue in ((MainGameViewModel)BindingContext).ExtraClues)
@@ -117,38 +114,6 @@ namespace UrbanGame.Views
                     Text = $"{extraClue.Minor}. {extraClue.Content}"
                 });    
             }
-        }
-    }
-
-    public class EmbeddedImages : ContentPage
-    {
-        public EmbeddedImages()
-        {
-            var embeddedImage = new Image { Aspect = Aspect.AspectFit };
-
-            // resource identifiers start with assembly-name DOT filename
-            embeddedImage.Source = ImageSource.FromResource("UrbanGame.Resources.emptyImage.png");
-
-            Content = new StackLayout
-            {
-                Children = {
-                new Label {
-                    Text = "ImageSource.FromResource",
-                    FontSize = Device.GetNamedSize (NamedSize.Medium, typeof(Label)),
-                    FontAttributes = FontAttributes.Bold
-                },
-                embeddedImage,
-                new Label { Text = "WorkingWithImages.beach.jpg embedded resource" }
-            },
-                Padding = new Thickness(0, 20, 0, 0),
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                HorizontalOptions = LayoutOptions.CenterAndExpand
-            };
-
-            // NOTE: use for debugging, not in released app code!
-            //var assembly = typeof(EmbeddedImages).GetTypeInfo().Assembly;
-            //foreach (var res in assembly.GetManifestResourceNames()) 
-            //	System.Diagnostics.Debug.WriteLine("found resource: " + res);
         }
     }
 }

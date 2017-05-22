@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UrbanGame;assembly=UrbanGame"
@@ -8,36 +9,37 @@
              x:Class="UrbanGame.Views.MainGamePage"
              Title="MainGamePage">
     <ContentPage.BindingContext>
-        <viewModels:MainGameViewModel/>
+        <viewModels:MainGameViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:ScanCodeButtonTextConverter x:Key="ScanCodeButtonTextConverter"/>
-            <converters:ScanCodeButtonIsEnabledConverter x:Key="ScanCodeButtonIsEnabledConverter"/>
-            <converters:ObjectiveLabelBackgroundColorConverter x:Key="ObjectiveLabelBackgroundColorConverter"/>
+            <converters:ScanCodeButtonTextConverter x:Key="ScanCodeButtonTextConverter" />
+            <converters:ScanCodeButtonIsEnabledConverter x:Key="ScanCodeButtonIsEnabledConverter" />
+            <converters:ObjectiveLabelBackgroundColorConverter x:Key="ObjectiveLabelBackgroundColorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
                     Android="5"
                     iOS="5,25,5,5"
-                    WinPhone="5"></OnPlatform>
+                    WinPhone="5">
+        </OnPlatform>
     </ContentPage.Padding>
 
     <StackLayout>
-        <Frame VerticalOptions="Start" 
-            Padding="5">
+        <Frame VerticalOptions="Start"
+               Padding="5">
 
             <Grid VerticalOptions="Start"
                   HorizontalOptions="Fill">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Text="Wynik"
@@ -45,33 +47,33 @@
                        Grid.Row="0"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center" />
 
                 <Label Text="Czas gry"
                        FontSize="Medium"
                        Grid.Row="1"
                        Grid.Column="0"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center" />
 
                 <Label x:Name="GameTimeLabel"
                        Text="{Binding GameElapsedTime}"
                        FontSize="Medium"
                        Grid.Row="2"
                        Grid.Column="0"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center" />
 
                 <Label Text="Punkty"
                        FontSize="Medium"
                        Grid.Row="1"
                        Grid.Column="1"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center" />
 
                 <Label x:Name="PoinsLabel"
                        Text="{Binding Points}"
                        FontSize="Medium"
                        Grid.Row="2"
                        Grid.Column="1"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center" />
             </Grid>
         </Frame>
 
@@ -87,12 +89,12 @@
                         <StackLayout HorizontalOptions="FillAndExpand"
                                      VerticalOptions="FillAndExpand">
                             <Label Text="{Binding ObjectiveLabel}"
-                                    BackgroundColor="{Binding IsCompleted, Converter={StaticResource ObjectiveLabelBackgroundColorConverter}}"
-                                    IsEnabled="{Binding IsStarted}"
-                                    FontSize="Large"
-                                    HorizontalOptions="Fill"
-                                    HorizontalTextAlignment="Center"
-                                    VerticalTextAlignment="Center"/>
+                                   BackgroundColor="{Binding IsCompleted, Converter={StaticResource ObjectiveLabelBackgroundColorConverter}}"
+                                   IsEnabled="{Binding IsStarted}"
+                                   FontSize="Large"
+                                   HorizontalOptions="Fill"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center" />
                         </StackLayout>
                     </DataTemplate>
                 </forms:CarouselView.ItemTemplate>
@@ -107,15 +109,16 @@
                                                     HorizontalOptions="FillAndExpand"
                                                     Margin="0">
                             <Image Source="{Binding ImageSource}"
-                                   Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </local:AspectRatioContainer>
                     </Frame>
-                    
-
+                    <Button Text="Dowiedz się więcej!"
+                            Command="{Binding OpenObjectiveDetailsCommmand}"
+                            IsVisible="{Binding ObjectiveCompleted}" />
                     <Label Text="Główna wskazówka:"
                            FontSize="Medium">
                     </Label>
-                    <Label Text="{Binding MainClue.Content}"/>
+                    <Label Text="{Binding MainClue.Content}" />
                     <Label Text="Dodatkowe wskazówki:"
                            FontSize="Medium">
                     </Label>
@@ -131,12 +134,12 @@
             </ScrollView>
         </Frame>
 
-        <Frame Padding="5" 
+        <Frame Padding="5"
                VerticalOptions="End">
             <Grid HorizontalOptions="Fill">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -152,7 +155,7 @@
                         HorizontalOptions="FillAndExpand"
                         BackgroundColor="Green"
                         Grid.Column="1"
-                        Clicked="ScanCodeButton_Clicked"/>
+                        Clicked="ScanCodeButton_Clicked" />
             </Grid>
         </Frame>
     </StackLayout>

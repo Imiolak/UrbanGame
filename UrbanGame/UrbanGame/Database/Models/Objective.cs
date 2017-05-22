@@ -25,6 +25,8 @@ namespace UrbanGame.Database.Models
 
         public string ImageUrl { get; set; }
 
+        public string DetailsPageUrl { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Clue> Clues { get; set; }
 
