@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UrbanGame.UI.Pages.WelcomePage"
+             Title="WelcomePage"
+             BackgroundImage="UrbanGame.Resources.background.jpg">
+
+    <AbsoluteLayout VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+
+        <Image x:Name="WelcomePageBackgroundImage"
+               Aspect="AspectFill"
+               AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0"
+               AbsoluteLayout.LayoutFlags="All" />
+
+        <StackLayout AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0" 
+                         AbsoluteLayout.LayoutFlags="All"
+                         Padding="10"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="FillAndExpand">
+
+            <Label Text="Mały Skarbek"
+                       FontSize="Large"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="StartAndExpand"/>
+
+            <Button Text="Start"
+                        FontSize="Medium"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="End"
+                        Clicked="StartGameButton_Clicked" />
+        </StackLayout>
+        
+    </AbsoluteLayout>
+</ContentPage>

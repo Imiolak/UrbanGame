@@ -20,8 +20,8 @@ namespace UrbanGame.Database.Models
         GameEnded,
         GameEndedTimestamp,
         NumberOfObjectives,
-        CurrentObjective,
-        PointsPerMainObjective,
-        PointsPerExtraObjective
+        CompletedObjectives,
+        CorrectlyAnsweredQuestions,
+        IncorrectlyAnsweredQustions
     }
 }

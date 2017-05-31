@@ -1,5 +1,6 @@
 ﻿using SQLite.Net;
 using SQLiteNetExtensions.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UrbanGame.Database.Models;
@@ -26,10 +27,23 @@ namespace UrbanGame.Database
             return _database.GetAllWithChildren<Objective>(recursive: true);
         }
 
-        public Objective GetObjectiveForClue(int clueMajor)
+        public Objective GetObjectiveByObjectiveNo(int objectiveNo)
         {
-            return _database.GetAllWithChildren<Objective>(o => o.ObjectiveNo == clueMajor, recursive: true)
+            return _database.GetAllWithChildren<Objective>(o => o.ObjectiveNo == objectiveNo, recursive: true)
                 .Single();
+        }
+
+        public void InsertEmptyObjectives(int numberOfObjectives)
+        {
+            for (var objecttiveNo = 1; objecttiveNo <= numberOfObjectives; objecttiveNo++)
+            {
+                var objective = new Objective
+                {
+                    ObjectiveNo = objecttiveNo
+                };
+
+                AddObjective(objective);
+            }
         }
 
         public void AddObjective(Objective objective)
@@ -50,10 +64,92 @@ namespace UrbanGame.Database
         }
         #endregion
 
-        #region Clues
-        public void AddClue(Clue clue)
+        #region Objective Steps
+        public void AddObjectiveStep(ObjectiveStep objectiveStep)
         {
-            _database.Insert(clue);
+            var objectiveStepType = Type.GetType(objectiveStep.ObjectiveStepType);
+            _database.Insert(objectiveStep, objectiveStepType);
+        }
+
+        public void UpdateObjectiveStep(ObjectiveStep objectiveStep)
+        {
+            _database.Update(objectiveStep, Type.GetType(objectiveStep.ObjectiveStepType));
+        }
+
+        public IEnumerable<ObjectiveStep> GetObjectiveStepsByObjectiveId(int objectiveId)
+        {
+            var objectiveSteps = new List<ObjectiveStep>();
+
+            objectiveSteps.AddRange(_database.Table<GoToLocationObjectiveStep>().Where(s => s.ObjectiveId == objectiveId));
+            objectiveSteps.AddRange(_database.Table<QuestionObjectiveStep>().Where(s => s.ObjectiveId == objectiveId));
+            objectiveSteps.AddRange(_database.Table<TextObjectiveStep>().Where(s => s.ObjectiveId == objectiveId));
+            objectiveSteps.AddRange(_database.Table<EndGameObjectiveStep>().Where(s => s.ObjectiveId == objectiveId));
+
+            return objectiveSteps;
+        }
+
+        public ObjectiveStep GetActiveObjectiveStep()
+        {
+            var allObjectives = GetAllObjectives()
+                .OrderBy(obj => obj.ObjectiveNo);
+
+            if (allObjectives.All(obj => obj.IsCompleted))
+            {
+                return _database.Table<EndGameObjectiveStep>()
+                    .Single();
+            }
+
+            var activeObjctive = allObjectives
+                .FirstOrDefault(obj => obj.IsStarted && !obj.IsCompleted);
+
+            var activeObjectiveStep = GetObjectiveStepsByObjectiveId(activeObjctive.Id)
+                .OrderBy(s => s.OrderInObjective)
+                .FirstOrDefault(step => !step.IsCompleted);
+
+            if (activeObjectiveStep == null)
+            {
+                activeObjctive.IsCompleted = true;
+                UpdateObjective(activeObjctive);
+                
+                var nextObjective = GetObjectiveByObjectiveNo(activeObjctive.ObjectiveNo + 1);
+                if (!nextObjective.IsStarted)
+                {
+                    activeObjctive.IsStarted = true;
+                    UpdateObjective(nextObjective);
+                }
+
+                activeObjectiveStep = GetObjectiveStepsByObjectiveId(nextObjective.Id)
+                    .OrderBy(step => step.OrderInObjective)
+                    .First();
+            }
+
+            activeObjectiveStep.IsStarted = true;
+            UpdateObjectiveStep(activeObjectiveStep);
+
+            return activeObjectiveStep;
+        }
+        
+        public void CompleteObjectiveStep(ObjectiveStep objectiveStep)
+        {
+            objectiveStep.IsCompleted = true;
+            UpdateObjectiveStep(objectiveStep);
+        }
+
+        public void StartNextObjectiveStep()
+        {
+            var notCompletedObjectives = _database.Table<Objective>()
+                .Where(obj => !obj.IsCompleted)
+                .OrderBy(obj => obj.ObjectiveNo);
+                
+            var firstNotCompletedObjective = notCompletedObjectives.First();
+            var firstNotStartedObjectiveStep = GetObjectiveStepsByObjectiveId(firstNotCompletedObjective.Id)
+                .FirstOrDefault(step => !step.IsStarted);
+
+            if (firstNotStartedObjectiveStep != null)
+            {
+                firstNotStartedObjectiveStep.IsStarted = true;
+                UpdateObjectiveStep(firstNotStartedObjectiveStep);
+            }
         }
         #endregion
 
@@ -87,13 +183,21 @@ namespace UrbanGame.Database
         {
             _database.CreateTable<ApplicationVariable>();
             _database.CreateTable<Objective>();
-            _database.CreateTable<Clue>();
+            _database.CreateTable<ObjectiveStep>();
+            _database.CreateTable<EndGameObjectiveStep>();
+            _database.CreateTable<GoToLocationObjectiveStep>();
+            _database.CreateTable<TextObjectiveStep>();
+            _database.CreateTable<QuestionObjectiveStep>();
         }
 
         public void ClearDb()
         {
             _database.DeleteAll<ApplicationVariable>();
-            _database.DeleteAll<Clue>();
+            _database.DeleteAll<QuestionObjectiveStep>();
+            _database.DeleteAll<GoToLocationObjectiveStep>();
+            _database.DeleteAll<EndGameObjectiveStep>();
+            _database.DeleteAll<TextObjectiveStep>();
+            _database.DeleteAll<ObjectiveStep>();
             _database.DeleteAll<Objective>();
         }
         #endregion

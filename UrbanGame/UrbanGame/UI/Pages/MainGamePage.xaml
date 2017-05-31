@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:UrbanGame.ViewModels;assembly=UrbanGame"
+             x:Class="UrbanGame.UI.Pages.MainGamePage"
+             Title="MainGamePage">
+    <ContentPage.BindingContext>
+        <viewModels:MainGamePageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    Android="5"
+                    iOS="5,25,5,5"
+                    WinPhone="5">
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <StackLayout VerticalOptions="FillAndExpand">
+        <Frame VerticalOptions="Start"
+               Padding="5">
+
+            <Grid VerticalOptions="Start"
+                  HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Text="Znalezione cele"
+                       FontSize="Medium"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       HorizontalOptions="Center" />
+
+                <Label x:Name="PoinsLabel"
+                       Text="{Binding CompletedObjectives}"
+                       FontSize="Medium"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Poprawne odpowiedzi"
+                       FontSize="Medium"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       HorizontalOptions="Center" />
+
+                <Label Text="{Binding CorrectlyAnsweredQuestions}"
+                       FontSize="Medium"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Niepoprawne odpowiedzi"
+                       FontSize="Medium"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       HorizontalOptions="Center" />
+
+                <Label Text="{Binding IncorrectlyAnsweredQuestions}"
+                       FontSize="Medium"
+                       Grid.Row="2"
+                       Grid.Column="1"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Czas gry"
+                       FontSize="Medium"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       HorizontalOptions="Center" />
+
+                <Label x:Name="GameTimeLabel"
+                       Text="{Binding GameElapsedTime}"
+                       FontSize="Medium"
+                       Grid.Row="3"
+                       Grid.Column="1"
+                       HorizontalOptions="Center" />
+            </Grid>
+        </Frame>
+
+        <Frame x:Name="PageContentFrame"
+            VerticalOptions="FillAndExpand">
+
+        </Frame>
+    </StackLayout>
+</ContentPage>

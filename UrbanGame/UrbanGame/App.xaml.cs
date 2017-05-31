@@ -1,8 +1,9 @@
 ﻿
 using UrbanGame.Database;
 using UrbanGame.Database.Models;
-using UrbanGame.Views;
 using Xamarin.Forms;
+using MainGamePage = UrbanGame.UI.Pages.MainGamePage;
+using WelcomePage = UrbanGame.UI.Pages.WelcomePage;
 
 namespace UrbanGame
 {

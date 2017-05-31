@@ -1,13 +1,13 @@
 ﻿using System;
 using UrbanGame.Database.Models;
 using UrbanGame.Exceptions;
-using UrbanGame.Game;
+using UrbanGame.Game.Codes;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing;
 using ZXing.Net.Mobile.Forms;
 
-namespace UrbanGame.Views
+namespace UrbanGame.UI.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WelcomePage : ContentPage
@@ -15,6 +15,7 @@ namespace UrbanGame.Views
         public WelcomePage()
         {
             InitializeComponent();
+            WelcomePageBackgroundImage.Source = ImageSource.FromResource("UrbanGame.Resources.background.jpg");
         }
 
         private async void StartGameButton_Clicked(object sender, EventArgs e)
@@ -49,31 +50,17 @@ namespace UrbanGame.Views
                     {
                         Navigation.PopModalAsync();
 
-                        var startingGameStructire = new ClueReader().ReadStartingCode(result.Text);
+                        ObjectiveCodeInterpreterFactory.CreateInterpreterEntryPoint().Interpret(result.Text);
 
-                        App.Database.SetApplicationVariable(ApplicationVariables.GameStarted,
-                            true.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.GameEnded,
-                            false.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.GameStartedTimestamp,
-                            DateTime.UtcNow.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.CurrentObjective,
-                            1.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.NumberOfObjectives,
-                            startingGameStructire.NumberOfObjectives.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.PointsPerMainObjective,
-                            startingGameStructire.PointsPerMainObjective.ToString());
-                        App.Database.SetApplicationVariable(ApplicationVariables.PointsPerExtraObjective,
-                            startingGameStructire.PointsPerExtraObjective.ToString());
-
-                        foreach (var objective in startingGameStructire.Objectives)
-                        {
-                            App.Database.AddObjective(objective);
-                        }
-
+                        App.Database.SetApplicationVariable(ApplicationVariables.GameStarted, true.ToString());
+                        App.Database.SetApplicationVariable(ApplicationVariables.GameEnded, false.ToString());
+                        App.Database.SetApplicationVariable(ApplicationVariables.CompletedObjectives, 0.ToString());
+                        App.Database.SetApplicationVariable(ApplicationVariables.CorrectlyAnsweredQuestions, 0.ToString());
+                        App.Database.SetApplicationVariable(ApplicationVariables.IncorrectlyAnsweredQustions, 0.ToString());
+                        App.Database.SetApplicationVariable(ApplicationVariables.GameStartedTimestamp, DateTime.UtcNow.ToString());
                         App.Instance.SetNewMainPage(new MainGamePage());
                     }
-                    catch (InvalidClueCodeException)
+                    catch (InvalidObjectiveCodeException)
                     {
                         DisplayAlert("Niepoprawny kod",
                             "Format kodu jest niepoprawny. Skontaktuj się z organizatorem gry i poinformuj go o tym!",
@@ -87,16 +74,6 @@ namespace UrbanGame.Views
             };
 
             await Navigation.PushModalAsync(qrScanPage);
-        }
-
-        private void HowToPlayButton_Clicked(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void ResetDbButton_Clicked(object sender, EventArgs e)
-        {
-            App.Database.ClearDb();
         }
     }
 }
