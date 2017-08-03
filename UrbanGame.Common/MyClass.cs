@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UrbanGame
+﻿namespace UrbanGame.Common
 {
     public class MyClass
     {
