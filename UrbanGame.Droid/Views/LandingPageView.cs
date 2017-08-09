@@ -6,6 +6,7 @@ using MvvmCross.Droid.Views;
 using MvvmCross.Platform.Core;
 using UrbanGame.Core.Interactions;
 using UrbanGame.Core.ViewModels;
+using ZXing.Mobile;
 
 namespace UrbanGame.Droid.Views
 {
@@ -23,6 +24,7 @@ namespace UrbanGame.Droid.Views
                 .To(viewModel => viewModel.ShowNotImplementedDialogIteraction).OneTime();
             set.Apply();
 
+            MobileBarcodeScanner.Initialize(Application);
             SetContentView(Resource.Layout.LandingPageView);
         }
 
@@ -44,7 +46,7 @@ namespace UrbanGame.Droid.Views
         {
             var dialogInteraction = e.Value;
             var dialog = new AlertDialog.Builder(this)
-                .SetTitle("Jeszcze nie dzia³a")
+                .SetTitle(dialogInteraction.Title)
                 .SetMessage(dialogInteraction.Text)
                 .SetPositiveButton("OK", (o, args) => {})
                 .Create();

@@ -49,6 +49,9 @@ namespace UrbanGame.Droid
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::UrbanGame.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
 			global::MvvmCross.Plugins.Sqlite.Droid.Resource.String.ApplicationName = global::UrbanGame.Droid.Resource.String.ApplicationName;
 			global::MvvmCross.Plugins.Sqlite.Droid.Resource.String.Hello = global::UrbanGame.Droid.Resource.String.Hello;
+			global::ZXing.Mobile.Resource.Id.contentFrame = global::UrbanGame.Droid.Resource.Id.contentFrame;
+			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::UrbanGame.Droid.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::UrbanGame.Droid.Resource.Layout.zxingscannerfragmentlayout;
 		}
 		
 		public partial class Attribute
@@ -119,6 +122,9 @@ namespace UrbanGame.Droid
 			// aapt resource value: 0x7f050008
 			public const int aboutTreasureButton = 2131034120;
 			
+			// aapt resource value: 0x7f05000a
+			public const int contentFrame = 2131034122;
+			
 			// aapt resource value: 0x7f050007
 			public const int howToPlayButton = 2131034119;
 			
@@ -161,6 +167,12 @@ namespace UrbanGame.Droid
 			
 			// aapt resource value: 0x7f030003
 			public const int SplashScreen = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int zxingscanneractivitylayout = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int zxingscannerfragmentlayout = 2130903045;
 			
 			static Layout()
 			{

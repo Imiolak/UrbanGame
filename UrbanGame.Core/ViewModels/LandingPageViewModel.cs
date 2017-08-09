@@ -1,7 +1,12 @@
 using MvvmCross.Core.Navigation;
 using MvvmCross.Core.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using UrbanGame.Core.Interactions;
 using UrbanGame.Core.Services;
+using ZXing;
+using ZXing.Mobile;
 
 namespace UrbanGame.Core.ViewModels
 {
@@ -38,16 +43,41 @@ namespace UrbanGame.Core.ViewModels
             base.ViewAppearing();
         }
         
-        private void StartGame()
+        private async void StartGame()
         {
+            var scannerOptions = new MobileBarcodeScanningOptions
+            {
+                PossibleFormats = new List<BarcodeFormat>
+                {
+                    BarcodeFormat.QR_CODE
+                }
+            };
+            var scanner = new MobileBarcodeScanner();
+
+            try
+            {
+                var scanResult = await scanner.Scan(scannerOptions);
+                _showNotImplementedDialogIteraction.Raise(new DialogInteraction
+                {
+                    Title = "Zeskanowa³em",
+                    Text = scanResult.Text
+                });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+            
+
             _applicationVariableService.SetValue("GameStarted", true.ToString());
-            _navigationService.Navigate<GamePageViewModel>();
+            await _navigationService.Navigate<GamePageViewModel>();
         }
 
         private void ActionNotImplemented()
         {
             _showNotImplementedDialogIteraction.Raise(new DialogInteraction
             {
+                Title = "Jeszcze niczego tu nie ma :(",
                 Text = "Soon\u2122"
             });
         }

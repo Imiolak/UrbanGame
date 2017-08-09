@@ -10,7 +10,7 @@ namespace UrbanGame.Core
             CreatableTypes()
                 .EndingWith("Service")
                 .AsInterfaces()
-                .RegisterAsLazySingleton();
+                .RegisterAsLazySingleton();           
             
             RegisterAppStart<ViewModels.LandingPageViewModel>();
         }
