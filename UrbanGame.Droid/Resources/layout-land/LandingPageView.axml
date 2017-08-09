@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:id="@+id/landingPageRoot">
+    <LinearLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/landingPageButtonGroupRoot"
+        android:gravity="center">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/landingPageButtonGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="Start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/startGameButton"
+                local:MvxBind="Click StartGameCommand"
+                android:background="@android:color/holo_green_light" />
+            <Button
+                android:text="Jak Grać?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/howToPlayButton"
+                android:gravity="center"
+                local:MvxBind="Click ActionNotImplementedCommand" />
+            <Button
+                android:text="O Skarbku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/aboutTreasureButton"
+                android:gravity="center"
+                local:MvxBind="Click ActionNotImplementedCommand" />
+            <Button
+                android:text="O Autorach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/aboutAuthorsButton"
+                android:gravity="center"
+                local:MvxBind="Click ActionNotImplementedCommand" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
