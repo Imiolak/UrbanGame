@@ -1,8 +1,5 @@
-using MvvmCross.Core.Navigation;
 using MvvmCross.Core.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UrbanGame.Core.Interactions;
 using UrbanGame.Core.Services;
 using ZXing;
@@ -12,13 +9,10 @@ namespace UrbanGame.Core.ViewModels
 {
     public class LandingPageViewModel : MvxViewModel
     {
-        private readonly IMvxNavigationService _navigationService;
         private readonly IApplicationVariableService _applicationVariableService;
 
-        public LandingPageViewModel(IMvxNavigationService navigationService, 
-            IApplicationVariableService applicationVariableService)
+        public LandingPageViewModel(IApplicationVariableService applicationVariableService)
         {
-            _navigationService = navigationService;
             _applicationVariableService = applicationVariableService;
         }
 
@@ -26,22 +20,8 @@ namespace UrbanGame.Core.ViewModels
 
         public IMvxCommand ActionNotImplementedCommand => new MvxCommand(ActionNotImplemented);
 
-        private readonly MvxInteraction<DialogInteraction> _showNotImplementedDialogIteraction 
-            = new MvxInteraction<DialogInteraction>();
-
-        public IMvxInteraction<DialogInteraction> ShowNotImplementedDialogIteraction =>
-            _showNotImplementedDialogIteraction;
-        
-        public override void ViewAppearing()
-        {
-            var gameStarted = _applicationVariableService.GetValueByKey("GameStarted");
-            if (gameStarted != null && bool.Parse(gameStarted))
-            {
-                _navigationService.Navigate<GamePageViewModel>();
-            }
-
-            base.ViewAppearing();
-        }
+        private readonly MvxInteraction<DialogInteraction> _dialogInteraction = new MvxInteraction<DialogInteraction>();
+        public IMvxInteraction<DialogInteraction> DialogInteraction => _dialogInteraction;
         
         private async void StartGame()
         {
@@ -52,30 +32,24 @@ namespace UrbanGame.Core.ViewModels
                     BarcodeFormat.QR_CODE
                 }
             };
-            var scanner = new MobileBarcodeScanner();
-
-            try
+            var scanner = new MobileBarcodeScanner
             {
-                var scanResult = await scanner.Scan(scannerOptions);
-                _showNotImplementedDialogIteraction.Raise(new DialogInteraction
-                {
-                    Title = "Zeskanowa³em",
-                    Text = scanResult.Text
-                });
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-            
+                TopText = "Zeskanuj kod startowy",
+                CancelButtonText = "Anuluj"
+            };
 
-            _applicationVariableService.SetValue("GameStarted", true.ToString());
-            await _navigationService.Navigate<GamePageViewModel>();
+            var scanResult = await scanner.Scan(scannerOptions);
+            if (scanResult != null)
+            {
+                _applicationVariableService.SetValue("GameStarted", true.ToString());
+                ShowViewModel<GamePageViewModel>();
+                
+            }
         }
 
         private void ActionNotImplemented()
         {
-            _showNotImplementedDialogIteraction.Raise(new DialogInteraction
+            _dialogInteraction.Raise(new DialogInteraction
             {
                 Title = "Jeszcze niczego tu nie ma :(",
                 Text = "Soon\u2122"

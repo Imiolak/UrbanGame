@@ -10,8 +10,7 @@ using ZXing.Mobile;
 
 namespace UrbanGame.Droid.Views
 {
-    [Activity(Label = "View for LandingPageViewModel", 
-        NoHistory = true)]
+    [Activity]
     public class LandingPageView : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -21,7 +20,7 @@ namespace UrbanGame.Droid.Views
             var set = this.CreateBindingSet<LandingPageView, LandingPageViewModel>();
             set.Bind(this)
                 .For(view => view.DialogInteraction)
-                .To(viewModel => viewModel.ShowNotImplementedDialogIteraction).OneTime();
+                .To(viewModel => viewModel.DialogInteraction).OneTime();
             set.Apply();
 
             MobileBarcodeScanner.Initialize(Application);
