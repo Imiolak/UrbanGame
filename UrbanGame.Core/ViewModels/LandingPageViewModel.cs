@@ -1,5 +1,6 @@
 using MvvmCross.Core.ViewModels;
 using System.Collections.Generic;
+using UrbanGame.Core.Custom;
 using UrbanGame.Core.Interactions;
 using UrbanGame.Core.Services;
 using ZXing;
@@ -7,7 +8,7 @@ using ZXing.Mobile;
 
 namespace UrbanGame.Core.ViewModels
 {
-    public class LandingPageViewModel : MvxViewModel
+    public class LandingPageViewModel : MvxViewModelWithNoBackStackNavigation
     {
         private readonly IApplicationVariableService _applicationVariableService;
 
@@ -42,8 +43,7 @@ namespace UrbanGame.Core.ViewModels
             if (scanResult != null)
             {
                 _applicationVariableService.SetValue("GameStarted", true.ToString());
-                ShowViewModel<GamePageViewModel>();
-                
+                ShowViewModelAndClearBackStack<GamePageViewModel>();
             }
         }
 

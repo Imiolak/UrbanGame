@@ -1,6 +1,7 @@
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
+using UrbanGame.Core.Custom;
 using UrbanGame.Core.Services;
 
 namespace UrbanGame.Core

@@ -2,7 +2,7 @@
 using UrbanGame.Core.Services;
 using UrbanGame.Core.ViewModels;
 
-namespace UrbanGame.Core
+namespace UrbanGame.Core.Custom
 {
     public class CustomAppStart : MvxNavigatingObject, IMvxAppStart
     {
