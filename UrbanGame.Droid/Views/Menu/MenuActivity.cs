@@ -5,26 +5,27 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Views;
 using MvvmCross.Platform.Core;
 using UrbanGame.Core.Interactions;
-using UrbanGame.Core.ViewModels;
+using UrbanGame.Core.ViewModels.Menu;
 using ZXing.Mobile;
+using Resource = UrbanGame.Droid.Resources.Resource;
 
-namespace UrbanGame.Droid.Views
+namespace UrbanGame.Droid.Views.Menu
 {
     [Activity]
-    public class LandingPageView : MvxActivity
+    public class MenuActivity : MvxActivity<MenuViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
-            var set = this.CreateBindingSet<LandingPageView, LandingPageViewModel>();
+            var set = this.CreateBindingSet<MenuActivity, MenuViewModel>();
             set.Bind(this)
                 .For(view => view.DialogInteraction)
                 .To(viewModel => viewModel.DialogInteraction).OneTime();
             set.Apply();
 
             MobileBarcodeScanner.Initialize(Application);
-            SetContentView(Resource.Layout.LandingPageView);
+            SetContentView(Resource.Layout.activity_menu);
         }
 
         private IMvxInteraction<DialogInteraction> _dialogInteraction;

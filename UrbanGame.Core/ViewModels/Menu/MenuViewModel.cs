@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UrbanGame.Core.Custom;
 using UrbanGame.Core.Interactions;
 using UrbanGame.Core.Services;
+using UrbanGame.Core.ViewModels.Game;
 using ZXing;
 using ZXing.Mobile;
 
-namespace UrbanGame.Core.ViewModels
+namespace UrbanGame.Core.ViewModels.Menu
 {
-    public class LandingPageViewModel : MvxViewModelWithNoBackStackNavigation
+    public class MenuViewModel : MvxViewModelWithNoBackStackNavigation
     {
         private readonly IApplicationVariableService _applicationVariableService;
 
-        public LandingPageViewModel(IApplicationVariableService applicationVariableService)
+        public MenuViewModel(IApplicationVariableService applicationVariableService)
         {
             _applicationVariableService = applicationVariableService;
         }
@@ -43,7 +44,7 @@ namespace UrbanGame.Core.ViewModels
             if (scanResult != null)
             {
                 _applicationVariableService.SetValue("GameStarted", true.ToString());
-                ShowViewModelAndClearBackStack<GamePageViewModel>();
+                ShowViewModelAndClearBackStack<GameViewModel>();
             }
         }
 

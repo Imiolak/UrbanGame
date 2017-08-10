@@ -41,8 +41,9 @@
     <Compile Include="Services\ApplicationVariableService.cs" />
     <Compile Include="Services\DataServiceBase.cs" />
     <Compile Include="Services\IApplicationVariableService.cs" />
-    <Compile Include="ViewModels\GamePageVIewModel.cs" />
-    <Compile Include="ViewModels\LandingPageViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameViewModel.cs" />
+    <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
+    <Compile Include="ViewModels\Game\ObjectiveHeaderViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MvvmCross.Binding, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -92,5 +93,6 @@
     <Compile Include="Database\Models\ApplicationVariable.cs" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

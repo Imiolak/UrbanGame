@@ -1,6 +1,7 @@
 ﻿using MvvmCross.Core.ViewModels;
 using UrbanGame.Core.Services;
-using UrbanGame.Core.ViewModels;
+using UrbanGame.Core.ViewModels.Game;
+using UrbanGame.Core.ViewModels.Menu;
 
 namespace UrbanGame.Core.Custom
 {
@@ -18,11 +19,11 @@ namespace UrbanGame.Core.Custom
             var gameStarted = _applicationVariableService.GetValueByKey("GameStarted");
             if (gameStarted != null && bool.Parse(gameStarted))
             {
-                ShowViewModel<GamePageViewModel>();
+                ShowViewModel<GameViewModel>();
             }
             else
             {
-                ShowViewModel<LandingPageViewModel>();
+                ShowViewModel<MenuViewModel>();
             }
         }
     }
