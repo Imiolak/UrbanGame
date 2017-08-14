@@ -1,7 +1,6 @@
 using Android.App;
 using Android.Content.PM;
 using MvvmCross.Droid.Views;
-using UrbanGame.Droid.Resources;
 
 namespace UrbanGame.Droid
 {

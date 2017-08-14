@@ -7,7 +7,6 @@ using MvvmCross.Platform.Core;
 using UrbanGame.Core.Interactions;
 using UrbanGame.Core.ViewModels.Menu;
 using ZXing.Mobile;
-using Resource = UrbanGame.Droid.Resources.Resource;
 
 namespace UrbanGame.Droid.Views.Menu
 {

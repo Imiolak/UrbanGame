@@ -1,6 +1,7 @@
 using Android.Content;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Platform;
+using MvvmCross.Droid.Shared.Presenter;
 using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -22,7 +23,8 @@ namespace UrbanGame.Droid
 
         protected override IMvxAndroidViewPresenter CreateViewPresenter()
         {
-            var presenter = Mvx.IocConstruct<CustomAndroidPresenter>();
+            var fragmentsPresenter = new MvxFragmentsPresenter(AndroidViewAssemblies);
+            var presenter = new CustomAndroidPresenter(fragmentsPresenter);
             Mvx.RegisterSingleton<IMvxAndroidViewPresenter>(presenter);
 
             return presenter;

@@ -13,8 +13,23 @@ namespace UrbanGame.Core.ViewModels.Game
         {
             _applicationVariableService = applicationVariableService;
         }
+        
+        public string ObjNo { get; set; }
+        
+        public string ObjTitle { get; set; }
 
         public MvxCommand ResetGameCommand => new MvxCommand(ResetGame);
+
+        public MvxCommand SetViewModelCommand => new MvxCommand(SetViewModel);
+
+        private void SetViewModel()
+        {
+            ShowViewModel<ObjectiveHeaderViewModel>(new
+            {
+                objectiveNo = ObjNo,
+                objectiveTitle = ObjTitle
+            });
+        }
 
         private void ResetGame()
         {

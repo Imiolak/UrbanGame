@@ -5,19 +5,19 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:text="1"
+        local:MvxBind="Text ObjectiveNo"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/textView1"
+        android:layout_height="wrap_content"
+        android:id="@+id/objectiveNoTextView"
         android:gravity="center"
         android:layout_weight="1" />
     <TextView
-        android:text="objective header"
+        local:MvxBind="Text ObjectiveTitle"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/textView2"
+        android:layout_height="wrap_content"
+        android:id="@+id/objectiveTitleTextView"
         android:gravity="center"
         android:layout_weight="5" />
 </LinearLayout>

@@ -4,14 +4,51 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <fragment
-        android:name=" "
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/objectiveHeaderFragment" />
-    <fragment
-        android:name=""
+        android:id="@+id/objectiveHeaderRoot" />
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/objectiveBodyFragment" />
+        android:id="@+id/gamePageRoot">
+        <TextView
+            android:text="Objective No"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1" />
+        <EditText
+            local:MvxBind="Text ObjNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText1" />
+        <TextView
+            android:text="Objective Title"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2" />
+        <EditText
+            local:MvxBind="Text ObjTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2" />
+        <Button
+            local:MvxBind="Click SetViewModelCommand"
+            android:text="Set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button1" />
+        <Button
+            local:MvxBind="Click ResetGameCommand"
+            android:text="Reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/restGameButton" />
+    </LinearLayout>
 </LinearLayout>
