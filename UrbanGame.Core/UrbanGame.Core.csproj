@@ -42,6 +42,7 @@
     <Compile Include="Services\DataServiceBase.cs" />
     <Compile Include="Services\IApplicationVariableService.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
+    <Compile Include="ViewModels\Game\ObjectiveNavigationViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
     <Compile Include="ViewModels\Game\ObjectiveHeaderViewModel.cs" />
   </ItemGroup>

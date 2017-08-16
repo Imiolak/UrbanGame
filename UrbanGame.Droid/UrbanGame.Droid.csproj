@@ -158,6 +158,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\Game\GameActivity.cs" />
+    <Compile Include="Views\Game\ObjectiveNavigationFragment.cs" />
     <Compile Include="Views\Menu\MenuActivity.cs" />
     <Compile Include="Views\Game\ObjectiveHeaderFragment.cs" />
   </ItemGroup>
@@ -171,6 +172,7 @@
     <AndroidResource Include="Resources\layout\activity_game.axml" />
     <AndroidResource Include="Resources\layout-land\LandingPageView.axml" />
     <AndroidResource Include="Resources\layout\fragment_objectiveheader.axml" />
+    <AndroidResource Include="Resources\layout\fragment_objectivenavigation.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

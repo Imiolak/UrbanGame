@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <Button
+        local:MvxBind="Click PreviousObjectiveCommand"
+        android:text="&lt;&lt;"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previousObjectiveButton"
+        android:layout_alignParentLeft="true" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/objectiveDisplayRoot"
+        android:layout_centerInParent="true">
+        <TextView
+            android:text="Zadanie "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/objectiveTextView" />
+        <TextView
+            local:MvxBind="Text CurrentObjective"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/currentObjectiveTextView" />
+        <TextView
+            android:text="/"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/objectiveSeparatorTextView" />
+        <TextView
+            local:MvxBind="Text NumberOfObjectives"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/numberOfObjectivesTextView" />
+    </LinearLayout>
+    <Button
+        local:MvxBind="Click NextObjectiveCommand"
+        android:text="&gt;&gt;"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nextObjectiveButton"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>
