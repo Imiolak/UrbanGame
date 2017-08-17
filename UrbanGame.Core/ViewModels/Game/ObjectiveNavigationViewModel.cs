@@ -1,5 +1,6 @@
 ﻿using MvvmCross.Core.ViewModels;
 using UrbanGame.Core.Services;
+using UrbanGame.Core.ViewModels.Objective;
 
 namespace UrbanGame.Core.ViewModels.Game
 {
@@ -10,11 +11,12 @@ namespace UrbanGame.Core.ViewModels.Game
         public ObjectiveNavigationViewModel(IGameStateService gameStateService)
         {
             _gameStateService = gameStateService;
+            _currentObjective = _gameStateService.GetCurrentActiveObjectiveNo();
         }
 
         public int NumberOfObjectives => _gameStateService.GetNumberOfObjectives();
 
-        private int _currentObjective = 2;
+        private int _currentObjective;
         public int CurrentObjective
         {
             get => _currentObjective;
@@ -24,6 +26,11 @@ namespace UrbanGame.Core.ViewModels.Game
                 RaisePropertyChanged(nameof(CurrentObjective));
                 RaisePropertyChanged(nameof(PreviousObjectiveButtonEnabled));
                 RaisePropertyChanged(nameof(NextObjectiveButtonEnabled));
+
+                ShowViewModel<ObjectiveViewModel>(new
+                {
+                    objectiveNo = _currentObjective
+                });
             }
         }
         
@@ -51,6 +58,7 @@ namespace UrbanGame.Core.ViewModels.Game
 
         public bool PreviousObjectiveButtonEnabled => CurrentObjective > 1;
 
+        //public bool NextObjectiveButtonEnabled => CurrentObjective < _gameStateService.GetCurrentActiveObjectiveNo();
         public bool NextObjectiveButtonEnabled => CurrentObjective < NumberOfObjectives;
 
         private void PreviousObjective()

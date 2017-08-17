@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="objectiveNavigationFragment" />
-    <LinearLayout
-        android:id="@+id/objectiveHeaderRoot"
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/objectiveFragmentContainer" />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -27,5 +26,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/restGameButton" />
+        <Button
+            local:MvxBind="Click AdvanceObjectiveCommand"
+            android:text="Advance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/advanceObjectiveButton" />
     </LinearLayout>
 </LinearLayout>

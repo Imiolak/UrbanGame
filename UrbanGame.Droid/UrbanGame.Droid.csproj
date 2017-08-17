@@ -160,7 +160,8 @@
     <Compile Include="Views\Game\GameActivity.cs" />
     <Compile Include="Views\Game\ObjectiveNavigationFragment.cs" />
     <Compile Include="Views\Menu\MenuActivity.cs" />
-    <Compile Include="Views\Game\ObjectiveHeaderFragment.cs" />
+    <Compile Include="Views\Objective\ObjectiveHeaderFragment.cs" />
+    <Compile Include="Views\Objective\ObjecviteFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
@@ -171,8 +172,15 @@
     <AndroidResource Include="Resources\layout\activity_menu.axml" />
     <AndroidResource Include="Resources\layout\activity_game.axml" />
     <AndroidResource Include="Resources\layout-land\LandingPageView.axml" />
-    <AndroidResource Include="Resources\layout\fragment_objectiveheader.axml" />
-    <AndroidResource Include="Resources\layout\fragment_objectivenavigation.axml" />
+    <AndroidResource Include="Resources\layout\fragment_objectiveheader.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_objectivenavigation.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_objective.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
