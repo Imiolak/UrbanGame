@@ -7,11 +7,11 @@ namespace UrbanGame.Core.ViewModels.Game
 {
     public class GameViewModel : MvxViewModelWithNoBackStackNavigation
     {
-        private readonly IApplicationVariableService _applicationVariableService;
+        private readonly IGameStateService _gameStateService;
 
-        public GameViewModel(IApplicationVariableService applicationVariableService)
+        public GameViewModel(IGameStateService gameStateService)
         {
-            _applicationVariableService = applicationVariableService;
+            _gameStateService = gameStateService;
         }
         
         public string ObjNo { get; set; }
@@ -20,20 +20,9 @@ namespace UrbanGame.Core.ViewModels.Game
 
         public IMvxCommand ResetGameCommand => new MvxCommand(ResetGame);
 
-        public IMvxCommand SetViewModelCommand => new MvxCommand(SetViewModel);
-
-        private void SetViewModel()
-        {
-            ShowViewModel<ObjectiveHeaderViewModel>(new
-            {
-                objectiveNo = ObjNo,
-                objectiveTitle = ObjTitle
-            });
-        }
-
         private void ResetGame()
         {
-            _applicationVariableService.SetValue("GameStarted", false.ToString());
+            _gameStateService.ResetGame();
             ShowViewModelAndClearBackStack<MenuViewModel>();
         }
     }

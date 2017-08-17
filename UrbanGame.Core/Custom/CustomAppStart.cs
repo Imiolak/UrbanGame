@@ -7,17 +7,16 @@ namespace UrbanGame.Core.Custom
 {
     public class CustomAppStart : MvxNavigatingObject, IMvxAppStart
     {
-        private readonly IApplicationVariableService _applicationVariableService;
+        private readonly IGameStateService _gameStateService;
 
-        public CustomAppStart(IApplicationVariableService applicationVariableService)
+        public CustomAppStart(IGameStateService gameStateService)
         {
-            _applicationVariableService = applicationVariableService;
+            _gameStateService = gameStateService;
         }
 
         public void Start(object hint = null)
         {
-            var gameStarted = _applicationVariableService.GetValueByKey("GameStarted");
-            if (gameStarted != null && bool.Parse(gameStarted))
+            if (_gameStateService.GetGameStarted())
             {
                 ShowViewModel<GameViewModel>();
             }

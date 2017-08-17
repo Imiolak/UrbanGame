@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace UrbanGame.Core.Database.Models
+namespace UrbanGame.Core.Models
 {
     public class ApplicationVariable
 	{

@@ -11,11 +11,11 @@ namespace UrbanGame.Core.ViewModels.Menu
 {
     public class MenuViewModel : MvxViewModelWithNoBackStackNavigation
     {
-        private readonly IApplicationVariableService _applicationVariableService;
+        private readonly IGameStateService _gameStateService;
 
-        public MenuViewModel(IApplicationVariableService applicationVariableService)
+        public MenuViewModel(IGameStateService gameStateService)
         {
-            _applicationVariableService = applicationVariableService;
+            _gameStateService = gameStateService;
         }
 
         public IMvxCommand StartGameCommand => new MvxCommand(StartGame);
@@ -43,7 +43,7 @@ namespace UrbanGame.Core.ViewModels.Menu
             var scanResult = await scanner.Scan(scannerOptions);
             if (scanResult != null)
             {
-                _applicationVariableService.SetValue("GameStarted", true.ToString());
+                _gameStateService.StartGame();
                 ShowViewModelAndClearBackStack<GameViewModel>();
             }
         }

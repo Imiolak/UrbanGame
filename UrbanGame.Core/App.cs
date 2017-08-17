@@ -2,7 +2,6 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 using UrbanGame.Core.Custom;
-using UrbanGame.Core.Services;
 
 namespace UrbanGame.Core
 {
@@ -15,7 +14,7 @@ namespace UrbanGame.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();           
             
-            RegisterAppStart(new CustomAppStart(Mvx.Resolve<IApplicationVariableService>()));
+            RegisterAppStart(Mvx.IocConstruct<CustomAppStart>());
         }
     }
 }

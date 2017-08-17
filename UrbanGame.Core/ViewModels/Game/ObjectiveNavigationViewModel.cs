@@ -5,14 +5,14 @@ namespace UrbanGame.Core.ViewModels.Game
 {
     public class ObjectiveNavigationViewModel : MvxViewModel
     {
-        private readonly IApplicationVariableService _applicationVariableService;
+        private readonly IGameStateService _gameStateService;
 
-        public ObjectiveNavigationViewModel(IApplicationVariableService applicationVariableService)
+        public ObjectiveNavigationViewModel(IGameStateService gameStateService)
         {
-            _applicationVariableService = applicationVariableService;
+            _gameStateService = gameStateService;
         }
 
-        public int NumberOfObjectives => 10;
+        public int NumberOfObjectives => _gameStateService.GetNumberOfObjectives();
 
         private int _currentObjective = 2;
         public int CurrentObjective

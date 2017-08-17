@@ -40,7 +40,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApplicationVariableService.cs" />
     <Compile Include="Services\DataServiceBase.cs" />
+    <Compile Include="Services\GameStateService.cs" />
     <Compile Include="Services\IApplicationVariableService.cs" />
+    <Compile Include="Services\IGameStateService.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\ObjectiveNavigationViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
@@ -91,7 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Models\ApplicationVariable.cs" />
+    <Compile Include="Models\ApplicationVariable.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -1,5 +1,5 @@
 ﻿using MvvmCross.Plugins.Sqlite;
-using UrbanGame.Core.Database.Models;
+using UrbanGame.Core.Models;
 
 namespace UrbanGame.Core.Services
 {
