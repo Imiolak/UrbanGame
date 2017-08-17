@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
     <Button
-        local:MvxBind="Click PreviousObjectiveCommand"
+        local:MvxBind="Click PreviousObjectiveCommand; Enabled PreviousObjectiveButtonEnabled"
         android:text="&lt;&lt;"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:id="@+id/numberOfObjectivesTextView" />
     </LinearLayout>
     <Button
-        local:MvxBind="Click NextObjectiveCommand"
+        local:MvxBind="Click NextObjectiveCommand; Enabled NextObjectiveButtonEnabled"
         android:text="&gt;&gt;"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

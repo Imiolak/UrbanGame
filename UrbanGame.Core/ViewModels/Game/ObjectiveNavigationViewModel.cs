@@ -12,7 +12,9 @@ namespace UrbanGame.Core.ViewModels.Game
             _applicationVariableService = applicationVariableService;
         }
 
-        private int _currentObjective = 1;
+        public int NumberOfObjectives => 10;
+
+        private int _currentObjective = 2;
         public int CurrentObjective
         {
             get => _currentObjective;
@@ -20,14 +22,36 @@ namespace UrbanGame.Core.ViewModels.Game
             {
                 _currentObjective = value;
                 RaisePropertyChanged(nameof(CurrentObjective));
+                RaisePropertyChanged(nameof(PreviousObjectiveButtonEnabled));
+                RaisePropertyChanged(nameof(NextObjectiveButtonEnabled));
+            }
+        }
+        
+        private IMvxCommand _previousObjectiveCommand;
+        public IMvxCommand PreviousObjectiveCommand
+        {
+            get
+            {
+                if (_previousObjectiveCommand == null)
+                    _previousObjectiveCommand = new MvxCommand(PreviousObjective);
+                return _previousObjectiveCommand;
             }
         }
 
-        public int NumberOfObjectives => 10;
+        private IMvxCommand _nextObjectiveCommand;
+        public IMvxCommand NextObjectiveCommand
+        {
+            get
+            {
+                if (_nextObjectiveCommand == null)
+                    _nextObjectiveCommand = new MvxCommand(NextObjective);
+                return _nextObjectiveCommand;
+            }
+        }
 
-        public MvxCommand PreviousObjectiveCommand => new MvxCommand(PreviousObjective);
-        
-        public MvxCommand NextObjectiveCommand => new MvxCommand(NextObjective);
+        public bool PreviousObjectiveButtonEnabled => CurrentObjective > 1;
+
+        public bool NextObjectiveButtonEnabled => CurrentObjective < NumberOfObjectives;
 
         private void PreviousObjective()
         {

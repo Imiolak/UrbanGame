@@ -18,9 +18,9 @@ namespace UrbanGame.Core.ViewModels.Game
         
         public string ObjTitle { get; set; }
 
-        public MvxCommand ResetGameCommand => new MvxCommand(ResetGame);
+        public IMvxCommand ResetGameCommand => new MvxCommand(ResetGame);
 
-        public MvxCommand SetViewModelCommand => new MvxCommand(SetViewModel);
+        public IMvxCommand SetViewModelCommand => new MvxCommand(SetViewModel);
 
         private void SetViewModel()
         {
