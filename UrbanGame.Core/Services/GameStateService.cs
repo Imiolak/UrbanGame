@@ -31,15 +31,51 @@ namespace UrbanGame.Core.Services
                 ObjectiveNo = 1,
                 ObjectiveHeader = "pierwszy"
             });
+            _objectiveService.AddObjectiveStep(new ObjectiveStep
+            {
+                Text = "no 1 s1",
+                ObjectiveNo = 1,
+                OrderInObjective = 1
+            });
+            _objectiveService.AddObjectiveStep(new ObjectiveStep
+            {
+                Text = "no 1 s2",
+                ObjectiveNo = 1,
+                OrderInObjective = 2
+            });
             _objectiveService.AddObjective(new Objective
             {
                 ObjectiveNo = 2,
                 ObjectiveHeader = "drugi"
             });
+            _objectiveService.AddObjectiveStep(new ObjectiveStep
+            {
+                Text = "no 2 s1",
+                ObjectiveNo = 2,
+                OrderInObjective = 1
+            });
             _objectiveService.AddObjective(new Objective
             {
                 ObjectiveNo = 3,
                 ObjectiveHeader = "trzeci"
+            });
+            _objectiveService.AddObjectiveStep(new ObjectiveStep
+            {
+                Text = "no 3 s1",
+                ObjectiveNo = 3,
+                OrderInObjective = 1
+            });
+            _objectiveService.AddObjectiveStep(new ObjectiveStep
+            {
+                Text = "no 3 s2",
+                ObjectiveNo = 3,
+                OrderInObjective = 2
+            });
+            _objectiveService.AddObjectiveStep(new ObjectiveStep
+            {
+                Text = "no 3 s3",
+                ObjectiveNo = 3,
+                OrderInObjective = 3
             });
         }
 

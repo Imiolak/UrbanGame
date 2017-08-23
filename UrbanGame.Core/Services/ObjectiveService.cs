@@ -8,6 +8,7 @@ namespace UrbanGame.Core.Services
         public ObjectiveService(IMvxSqliteConnectionFactory connectionFactory) 
             : base(connectionFactory)
         {
+            Connection.CreateTable<ObjectiveStep>();
             Connection.CreateTable<Objective>();
         }
 
@@ -16,14 +17,32 @@ namespace UrbanGame.Core.Services
             return Connection.Find<Objective>(o => o.ObjectiveNo == objectiveNo);
         }
 
+        public ObjectiveStep GetObjectiveStep(int objectiveNo, int orderInObjective)
+        {
+            return Connection.Find<ObjectiveStep>(os => os.ObjectiveNo == objectiveNo
+                                                        && os.OrderInObjective == orderInObjective);
+        }
+
+        public int GetNumberOfObjectiveStepsObjectiveNo(int objectiveNo)
+        {
+            return Connection.Table<ObjectiveStep>()
+                .Count(o => o.ObjectiveNo == objectiveNo);
+        }
+
         public void AddObjective(Objective objective)
         {
             Connection.Insert(objective);
         }
 
+        public void AddObjectiveStep(ObjectiveStep objectiveStep)
+        {
+            Connection.Insert(objectiveStep);
+        }
+
         public void RemoveAllObjectives()
         {
             Connection.DeleteAll<Objective>();
+            Connection.DeleteAll<ObjectiveStep>();
         }
     }
 }

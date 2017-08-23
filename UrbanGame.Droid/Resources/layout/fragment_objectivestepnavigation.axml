@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <Button
+        local:MvxBind="Click PreviousObjectiveStepCommand; Enabled PreviousObjectiveStepButtonEnabled"
+        android:text="&lt;&lt;"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previousObjectiveStepButton"
+        android:layout_alignParentLeft="true" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/objectiveStepDisplayRoot"
+        android:layout_centerInParent="true">
+        <TextView
+            android:text="Krok "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/objectiveStepTextView" />
+        <TextView
+            local:MvxBind="Text CurrentObjectiveStep"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/currentObjectiveStepTextView" />
+        <TextView
+            android:text="/"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/objectiveStepSeparatorTextView" />
+        <TextView
+            local:MvxBind="Text NumberOfObjectiveSteps"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/numberOfObjectiveStepsTextView" />
+    </LinearLayout>
+    <Button
+        local:MvxBind="Click NextObjectiveStepCommand; Enabled NextObjectiveStepButtonEnabled"
+        android:text="&gt;&gt;"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nextObjectiveStepButton"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

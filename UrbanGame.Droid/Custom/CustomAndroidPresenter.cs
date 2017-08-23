@@ -24,7 +24,7 @@ namespace UrbanGame.Droid.Custom
                 base.Show(intent);
                 return;
             }
-
+            
             _innerPresenter.Show(request);
         }
     }
