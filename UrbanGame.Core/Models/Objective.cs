@@ -9,7 +9,5 @@ namespace UrbanGame.Core.Models
 
         [Indexed(Unique = true)]
         public int ObjectiveNo { get; set; }
-
-        public string ObjectiveHeader { get; set; }
     }
 }

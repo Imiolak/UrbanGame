@@ -1,4 +1,6 @@
 ﻿using MvvmCross.Plugins.Sqlite;
+using System.Collections.Generic;
+using System.Linq;
 using UrbanGame.Core.Models;
 
 namespace UrbanGame.Core.Services
@@ -8,8 +10,9 @@ namespace UrbanGame.Core.Services
         public ObjectiveService(IMvxSqliteConnectionFactory connectionFactory) 
             : base(connectionFactory)
         {
-            Connection.CreateTable<ObjectiveStep>();
             Connection.CreateTable<Objective>();
+            Connection.CreateTable<ObjectiveStepBase>();
+            Connection.CreateTable<TextObjectiveStep>();
         }
 
         public Objective GetObjectiveByObjectiveNo(int objectiveNo)
@@ -17,16 +20,23 @@ namespace UrbanGame.Core.Services
             return Connection.Find<Objective>(o => o.ObjectiveNo == objectiveNo);
         }
 
-        public ObjectiveStep GetObjectiveStep(int objectiveNo, int orderInObjective)
+        public T GetObjectiveStep<T>(int objectiveNo, int orderInObjective)
+            where T : ObjectiveStepBase, new()
         {
-            return Connection.Find<ObjectiveStep>(os => os.ObjectiveNo == objectiveNo
-                                                        && os.OrderInObjective == orderInObjective);
+            return Connection.Find<T>(os => os.ObjectiveNo == objectiveNo
+                                            && os.OrderInObjective == orderInObjective);
         }
 
-        public int GetNumberOfObjectiveStepsObjectiveNo(int objectiveNo)
+        public int GetNumberOfObjectiveStepsByObjectiveNo(int objectiveNo)
         {
-            return Connection.Table<ObjectiveStep>()
-                .Count(o => o.ObjectiveNo == objectiveNo);
+            return GetObjectiveStepsForObjective(objectiveNo).Count;
+        }
+
+        public string GetObjectiveStepType(int objectiveNo, int orderInObjective)
+        {
+            return GetObjectiveStepsForObjective(objectiveNo)
+                .Single(os => os.OrderInObjective == orderInObjective)
+                .Type;
         }
 
         public void AddObjective(Objective objective)
@@ -34,15 +44,25 @@ namespace UrbanGame.Core.Services
             Connection.Insert(objective);
         }
 
-        public void AddObjectiveStep(ObjectiveStep objectiveStep)
+        public void AddObjectiveStep(ObjectiveStepBase objectiveStep)
         {
-            Connection.Insert(objectiveStep);
+            Connection.Insert(objectiveStep, objectiveStep.GetType());
         }
 
         public void RemoveAllObjectives()
         {
             Connection.DeleteAll<Objective>();
-            Connection.DeleteAll<ObjectiveStep>();
+            Connection.DeleteAll<TextObjectiveStep>();
+            Connection.DeleteAll<ObjectiveStepBase>();
+        }
+
+        private IList<ObjectiveStepBase> GetObjectiveStepsForObjective(int objectiveNo)
+        {
+            var objectiveSteps = new List<ObjectiveStepBase>();
+            objectiveSteps.AddRange(Connection.Table<TextObjectiveStep>()
+                .Where(os => os.ObjectiveNo == objectiveNo));
+
+            return objectiveSteps;
         }
     }
 }

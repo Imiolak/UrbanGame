@@ -2,7 +2,7 @@
 
 namespace UrbanGame.Core.Models
 {
-    public class ObjectiveStep
+    public class ObjectiveStepBase
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -13,6 +13,6 @@ namespace UrbanGame.Core.Models
         [Indexed(Name = "ObjectiveNoOrder", Order = 2, Unique = true)]
         public int OrderInObjective { get; set; }
 
-        public string Text { get; set; }
+        public string Type { get; set; }
     }
 }

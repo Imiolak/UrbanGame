@@ -1,10 +1,17 @@
 ﻿using MvvmCross.Core.ViewModels;
+using System;
+using System.Collections.Generic;
+using UrbanGame.Core.Models;
 using UrbanGame.Core.Services;
 
 namespace UrbanGame.Core.ViewModels.Game
 {
     public class ObjectiveStepNavigationViewModel : MvxViewModel
     {
+        private readonly IDictionary<string, Type> _viewModelTypesByObjectiveStepType = new Dictionary<string, Type>
+        {
+            { typeof(TextObjectiveStep).FullName, typeof(TextObjectiveStepViewModel) }
+        };
         private readonly IObjectiveService _objectiveService;
         private int _objectiveNo;
 
@@ -29,7 +36,8 @@ namespace UrbanGame.Core.ViewModels.Game
                 RaisePropertyChanged(nameof(PreviousObjectiveStepButtonEnabled));
                 RaisePropertyChanged(nameof(NextObjectiveStepButtonEnabled));
 
-                ShowViewModel<ObjectiveStepViewModel>(new
+                var objectiveStepType = _objectiveService.GetObjectiveStepType(_objectiveNo, _currentObjectiveStep);
+                ShowViewModel(_viewModelTypesByObjectiveStepType[objectiveStepType], new
                 {
                     objectiveNo = _objectiveNo,
                     orderInObjective = _currentObjectiveStep
@@ -37,7 +45,7 @@ namespace UrbanGame.Core.ViewModels.Game
             }
         }
         
-        public int NumberOfObjectiveSteps => _objectiveService.GetNumberOfObjectiveStepsObjectiveNo(_objectiveNo);
+        public int NumberOfObjectiveSteps => _objectiveService.GetNumberOfObjectiveStepsByObjectiveNo(_objectiveNo);
 
         private IMvxCommand _previousObjectiveStepCommand;
         public IMvxCommand PreviousObjectiveStepCommand

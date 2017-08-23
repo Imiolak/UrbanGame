@@ -125,8 +125,8 @@ namespace UrbanGame.Droid
 			// aapt resource value: 0x7f050008
 			public const int advanceObjectiveButton = 2131034120;
 			
-			// aapt resource value: 0x7f05001e
-			public const int contentFrame = 2131034142;
+			// aapt resource value: 0x7f05001f
+			public const int contentFrame = 2131034143;
 			
 			// aapt resource value: 0x7f05001a
 			public const int currentObjectiveStepTextView = 2131034138;
@@ -203,6 +203,9 @@ namespace UrbanGame.Droid
 			// aapt resource value: 0x7f05000c
 			public const int startGameButton = 2131034124;
 			
+			// aapt resource value: 0x7f05001e
+			public const int textObjectiveStepContent = 2131034142;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -232,13 +235,16 @@ namespace UrbanGame.Droid
 			public const int fragment_objectivestepview = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int splash_screen = 2130903045;
+			public const int fragment_textobjectivestep = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int zxingscanneractivitylayout = 2130903046;
+			public const int splash_screen = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int zxingscannerfragmentlayout = 2130903047;
+			public const int zxingscanneractivitylayout = 2130903047;
+			
+			// aapt resource value: 0x7f030008
+			public const int zxingscannerfragmentlayout = 2130903048;
 			
 			static Layout()
 			{
