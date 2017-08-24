@@ -48,9 +48,16 @@ namespace UrbanGame.Core.Services
             });
             _objectiveService.AddObjectiveStep(new TextObjectiveStep
             {
-                Text = "no 2 s1",
+                Text = "not lorem this time",
                 ObjectiveNo = 2,
                 OrderInObjective = 1
+            });
+            _objectiveService.AddObjectiveStep(new QuestionObjectiveStep
+            {
+                ObjectiveNo = 2,
+                OrderInObjective = 2,
+                Question = "Care to answer?",
+                AnswersString = "a1;a2;a3;a4"
             });
             _objectiveService.AddObjective(new Objective
             {
@@ -102,6 +109,5 @@ namespace UrbanGame.Core.Services
         private const string Lorem3 = "Proin tempor in magna eu faucibus. Vivamus nec mollis ante. Donec sed aliquet libero. Nulla ac rutrum mauris. Aenean lobortis feugiat magna. Aliquam consectetur leo sit amet ligula finibus eleifend. Donec ut lorem nibh. Fusce erat orci, molestie ac dui et, cursus bibendum augue. Praesent congue congue nibh. Duis varius mauris et interdum malesuada. Aliquam pharetra volutpat ligula, quis hendrerit massa semper nec. Integer semper est ex, quis scelerisque ex varius ut. Nunc dictum felis elit, eu egestas ipsum semper a. Nulla facilisi. Suspendisse tincidunt non augue in accumsan. Praesent egestas lorem nec ligula volutpat congue.";
         private const string Lorem4 = "Cras egestas, mauris id hendrerit iaculis, arcu nunc accumsan ante, nec ornare enim ligula ultricies mauris. Ut placerat interdum accumsan. Fusce commodo ultricies mi, eget dignissim felis porttitor eget. Integer a semper justo. Donec in pretium sapien, ut interdum magna. Aliquam bibendum interdum hendrerit. Nunc sit amet vestibulum felis. Duis quis libero molestie lectus vehicula tincidunt sed sed tellus. Morbi semper blandit felis, ultricies venenatis lacus tempor quis. Vestibulum ac tellus lectus. Cras hendrerit velit vitae ornare suscipit. Phasellus volutpat turpis fermentum sem feugiat bibendum. Phasellus et semper diam. Duis lacinia nisi odio, et cursus velit bibendum sed. Proin ultrices arcu sed cursus pellentesque.";
         private const string Lorem5 = "Duis in mi tincidunt, interdum sem sit amet, iaculis urna. Quisque ut dictum mauris, a blandit neque. Pellentesque malesuada enim efficitur lorem pellentesque, vitae mollis nulla efficitur. Ut facilisis metus id justo convallis pulvinar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at tempus turpis. Donec pharetra, turpis sed sodales suscipit, diam felis ullamcorper erat, vitae varius est nibh eget est. Nam mollis ex elit, in sodales dolor aliquet eu. Fusce auctor mattis tellus vitae convallis. Aliquam interdum cursus cursus. Aliquam malesuada, ipsum quis scelerisque tincidunt, turpis purus sagittis tortor, in porta lacus turpis vel metus.";
-
     }
 }

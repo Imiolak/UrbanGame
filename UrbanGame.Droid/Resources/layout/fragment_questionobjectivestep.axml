@@ -5,11 +5,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <TextView
-        local:MvxBind="Text Content"
         android:text="placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textObjectiveStepContent"
-        android:singleLine="false"
-        android:nestedScrollingEnabled="true" />
+        android:id="@+id/questionTextView"
+        android:gravity="center" />
+    <MvvmCross.Binding.Droid.Views.MvxListView
+        local:MvxBind="ItemsSource Answers"
+        local:MvxItemTemplate="@layout/item_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/answersListView" />
 </LinearLayout>

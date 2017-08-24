@@ -3,13 +3,12 @@
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <TextView
-        local:MvxBind="Text Content"
+    android:layout_height="wrap_content"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <Button
+        local:MvxBind="Text Text"
         android:text="placeholder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textObjectiveStepContent"
-        android:singleLine="false"
-        android:nestedScrollingEnabled="true" />
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -36,6 +36,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Custom\CustomAppStart.cs" />
     <Compile Include="Custom\MvxViewModelWithNoBackStackNavigation.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Interactions\DialogInteraction.cs" />
     <Compile Include="Models\Objective.cs" />
     <Compile Include="Models\ObjectiveStepBase.cs" />
@@ -48,9 +49,12 @@
     <Compile Include="Services\IGameStateService.cs" />
     <Compile Include="Services\IObjectiveService.cs" />
     <Compile Include="Services\ObjectiveService.cs" />
+    <Compile Include="ViewModels\Game\AnswerViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\ObjectiveNavigationViewModel.cs" />
     <Compile Include="ViewModels\Game\ObjectiveStepViewModel.cs" />
+    <Compile Include="Models\QuestionObjectiveStep.cs" />
+    <Compile Include="ViewModels\Game\QuestionObjectiveStepViewModel.cs" />
     <Compile Include="ViewModels\Game\TextObjectiveStepViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
     <Compile Include="ViewModels\Game\ObjectiveStepNavigationViewModel.cs" />

@@ -10,7 +10,8 @@ namespace UrbanGame.Core.ViewModels.Game
     {
         private readonly IDictionary<string, Type> _viewModelTypesByObjectiveStepType = new Dictionary<string, Type>
         {
-            { typeof(TextObjectiveStep).FullName, typeof(TextObjectiveStepViewModel) }
+            { typeof(TextObjectiveStep).FullName, typeof(TextObjectiveStepViewModel) },
+            { typeof(QuestionObjectiveStep).FullName, typeof(QuestionObjectiveStepViewModel) }
         };
         private readonly IObjectiveService _objectiveService;
         private int _objectiveNo;

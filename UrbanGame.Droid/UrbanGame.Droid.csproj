@@ -160,6 +160,7 @@
     <Compile Include="Views\Game\GameActivity.cs" />
     <Compile Include="Views\Game\ObjectiveNavigationFragment.cs" />
     <Compile Include="Views\Game\ObjectiveStepViewFragment.cs" />
+    <Compile Include="Views\Game\QuestionObjectiveStepFragment.cs" />
     <Compile Include="Views\Game\TextObjectiveStepFragment.cs" />
     <Compile Include="Views\Menu\MenuActivity.cs" />
     <Compile Include="Views\Game\ObjectiveStepNavigationFragment.cs" />
@@ -181,6 +182,8 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_objectivestepview.axml" />
     <AndroidResource Include="Resources\layout\fragment_textobjectivestep.axml" />
+    <AndroidResource Include="Resources\layout\fragment_questionobjectivestep.axml" />
+    <AndroidResource Include="Resources\layout\item_answer.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
