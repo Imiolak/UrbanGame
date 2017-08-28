@@ -92,10 +92,13 @@ namespace UrbanGame.Droid
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int answer_background = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int splash = 2130837505;
+			public const int Icon = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int splash = 2130837506;
 			
 			static Drawable()
 			{
@@ -126,7 +129,7 @@ namespace UrbanGame.Droid
 			public const int advanceObjectiveButton = 2131034120;
 			
 			// aapt resource value: 0x7f05001f
-			public const int answersListView = 2131034143;
+			public const int answersRadioGroup = 2131034143;
 			
 			// aapt resource value: 0x7f050021
 			public const int contentFrame = 2131034145;
@@ -290,8 +293,14 @@ namespace UrbanGame.Droid
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f060002
+			public const int AnswerButton = 2131099650;
+			
 			// aapt resource value: 0x7f060000
 			public const int Theme_Splash = 2131099648;
+			
+			// aapt resource value: 0x7f060001
+			public const int UrbanGameAppStyle = 2131099649;
 			
 			static Style()
 			{

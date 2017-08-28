@@ -35,5 +35,16 @@ namespace UrbanGame.Core.ViewModels.Game
         public string Question => _objectiveStep.Question;
 
         public ObservableCollection<AnswerViewModel> Answers { get; private set; }
+
+        private AnswerViewModel _selectedAnswer;
+        public AnswerViewModel SelectedAnswer
+        {
+            get => _selectedAnswer;
+            set
+            {
+                _selectedAnswer = value;
+                RaisePropertyChanged(nameof(SelectedAnswer));
+            }
+        }
     }
 }

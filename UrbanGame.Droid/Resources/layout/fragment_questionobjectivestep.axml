@@ -5,15 +5,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <TextView
-        android:text="placeholder"
+        local:MvxBind="Text Question"
+        android:text="question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/questionTextView"
         android:gravity="center" />
-    <MvvmCross.Binding.Droid.Views.MvxListView
-        local:MvxBind="ItemsSource Answers"
+    <MvvmCross.Binding.Droid.Views.MvxRadioGroup
+        local:MvxBind="ItemsSource Answers;SelectedItem SelectedAnswer"
         local:MvxItemTemplate="@layout/item_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/answersListView" />
+        android:id="@+id/answersRadioGroup" />
 </LinearLayout>
