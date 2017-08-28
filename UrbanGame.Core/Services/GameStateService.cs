@@ -75,11 +75,12 @@ namespace UrbanGame.Core.Services
                 ObjectiveNo = 3,
                 OrderInObjective = 2
             });
-            _objectiveService.AddObjectiveStep(new TextObjectiveStep
+            _objectiveService.AddObjectiveStep(new GoToLocationObjectiveStep
             {
-                Text = Lorem5,
                 ObjectiveNo = 3,
-                OrderInObjective = 3
+                OrderInObjective = 3,
+                Latitude = 49.979259,
+                Longitude = 20.411003
             });
         }
 

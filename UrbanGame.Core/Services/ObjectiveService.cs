@@ -14,6 +14,7 @@ namespace UrbanGame.Core.Services
             Connection.CreateTable<ObjectiveStepBase>();
             Connection.CreateTable<TextObjectiveStep>();
             Connection.CreateTable<QuestionObjectiveStep>();
+            Connection.CreateTable<GoToLocationObjectiveStep>();
         }
 
         public Objective GetObjectiveByObjectiveNo(int objectiveNo)
@@ -53,6 +54,7 @@ namespace UrbanGame.Core.Services
         public void RemoveAllObjectives()
         {
             Connection.DeleteAll<Objective>();
+            Connection.DeleteAll<GoToLocationObjectiveStep>();
             Connection.DeleteAll<QuestionObjectiveStep>();
             Connection.DeleteAll<TextObjectiveStep>();
             Connection.DeleteAll<ObjectiveStepBase>();
@@ -64,6 +66,8 @@ namespace UrbanGame.Core.Services
             objectiveSteps.AddRange(Connection.Table<TextObjectiveStep>()
                 .Where(os => os.ObjectiveNo == objectiveNo));
             objectiveSteps.AddRange(Connection.Table<QuestionObjectiveStep>()
+                .Where(os => os.ObjectiveNo == objectiveNo));
+            objectiveSteps.AddRange(Connection.Table<GoToLocationObjectiveStep>()
                 .Where(os => os.ObjectiveNo == objectiveNo));
 
             return objectiveSteps;
